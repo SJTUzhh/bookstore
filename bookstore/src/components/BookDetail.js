@@ -1,5 +1,7 @@
 import React from 'react';
 import { Descriptions, Button } from 'antd';
+import {addBook2Cart} from "../services/cartService"
+import {message} from 'antd';
 
 
 
@@ -7,11 +9,33 @@ import { Descriptions, Button } from 'antd';
 
 export class BookDetail extends React.Component{
 
+    constructor(props){
+        super(props);
+        //this.addToCart = this.addToCart.bind(this);
+        //this.checkAddResult = this.checkAddResult.bind(this);
+    }
+    
+    //TODO: 需要检查传回的userId和bookId是否和我们传过去的相等
+    checkAddResult(data) {
+        if(data != null) {
+            message.success("添加购物车成功！");
+        }
+        else{
+            message.error("添加购物车失败！");
+        }
+    }
+
+    add2Cart(userId, bookId) {
+        console.log("Adding "+ bookId + " to "+ userId + "'s Cart");
+        addBook2Cart(userId, bookId, this.checkAddResult)
+
+    }
 
     render() {
 
         const {info} = this.props;
-
+        const userId = JSON.parse(localStorage.getItem('user')).userId
+ 
         if(info == null){
             return null;
         }
@@ -32,7 +56,7 @@ export class BookDetail extends React.Component{
                     </div>
                 </div>
                 <div className={"button-groups"}>
-                    <Button type="danger" icon="shopping-cart" size={"large"}>
+                    <Button type="danger" icon="shopping-cart" size={"large"} onClick={this.add2Cart.bind(this, userId, info.bookId)}>
                         加入购物车
                     </Button>
 

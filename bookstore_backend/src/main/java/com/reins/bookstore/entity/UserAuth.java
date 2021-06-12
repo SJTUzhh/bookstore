@@ -27,7 +27,7 @@ public class UserAuth {
     private Integer userId;
     private String username;
 
-    @Transient
+    //@Transient
     private String password;
 
     private Integer userType;

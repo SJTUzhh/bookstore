@@ -6,6 +6,7 @@ import HomeView from "./view/HomeView";
 import LoginView from './view/LoginView'
 import {history} from "./utils/history";
 import BookView from "./view/BookView";
+import CartView from "./view/CartView";
 
 
 class BasicRoute extends React.Component{
@@ -26,6 +27,7 @@ class BasicRoute extends React.Component{
                     <PrivateRoute exact path="/" component={HomeView} />
                     <LoginRoute exact path="/login" component={LoginView} />
                     <PrivateRoute exact path="/bookDetails" component={BookView} />
+                    <PrivateRoute exact path="/cart" component={CartView} />
                     <Redirect from="/*" to="/" />
                 </Switch>
 
