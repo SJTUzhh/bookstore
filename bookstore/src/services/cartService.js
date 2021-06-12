@@ -6,3 +6,9 @@ export const addBook2Cart = (userId, bookId, callback) => {
     const data = {userId: userId, bookId: bookId};
     postRequest_v2(url, data, callback)
 }
+
+export const getCartsByUserId = (userId, callback) => {
+    const url = `${config.apiUrl}/getCartsByUserId`;
+    const data = {userId: userId};
+    postRequest_v2(url, data, callback)
+}

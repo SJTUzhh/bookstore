@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.reins.bookstore.entity.CartPK;
 
+import java.util.List;
+
 @Repository
 public class CartDaoImpl implements CartDao {
 
@@ -28,5 +30,9 @@ public class CartDaoImpl implements CartDao {
         return new CartPK(userId.intValue(), bookId.intValue());
     }
 
+    @Override
+    public List<Cart> getCartsByUserId(Integer userId){
+        return cartRepository.findDistinctByUserIdIgnoreCase(userId);
+    }
 
 }
