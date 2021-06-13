@@ -15,7 +15,6 @@ export class LoginRoute extends React.Component {
     }
 
     checkAuthAndAdmin = (data) => {
-        console.log(data);
         if (data.status >= 0) {
             // WARNING！！！！请不要像下面这样两次setState，这样后面的render会调用两次，出现问题！：
             // this.setState({ isAuthed: true, hasAuthed: true });
@@ -49,8 +48,6 @@ export class LoginRoute extends React.Component {
 
         const { component: Component, path = "/", exact = false, strict = false } = this.props;
 
-        console.log("LoginRoute isAuthed: " + this.state.isAuthed + ", isAdmin: " + this.state.isAdmin);
-
         if (!this.state.hasAuthed) {
             return null;
         }
@@ -70,16 +67,6 @@ export class LoginRoute extends React.Component {
                 return <Component {...props} />
             }
         }
-            // (
-            //     this.state.isAuthed ? (
-            //         <Redirect to={{
-            //             pathname: '/',
-            //             state: {from: props.location}
-            //         }}/>
-            //     ) : (
-            //         <Component {...props}/>
-            //     )
-            // )
         } />
     }
 }

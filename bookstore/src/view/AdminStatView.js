@@ -10,7 +10,7 @@ import {BookList} from "../components/BookList";
 
 const { Header, Content, Footer } = Layout;
 
-class AdminHomeView extends React.Component{
+class AdminStatView extends React.Component{
 
     constructor(props) {
         super(props);
@@ -37,7 +37,7 @@ class AdminHomeView extends React.Component{
 
                             <BookCarousel />
                             <BookList /> */}
-                            <p>欢迎来到管理员页面</p>
+                            <p>统计信息页面</p>
                             <div className={"foot-wrapper"}>
                             </div>
                         </div>
@@ -48,4 +48,4 @@ class AdminHomeView extends React.Component{
     }
 }
 
-export default withRouter(AdminHomeView);
+export default withRouter(AdminStatView);

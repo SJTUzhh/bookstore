@@ -13,10 +13,8 @@ export const login = (data) => {
             localStorage.setItem('user', JSON.stringify(data.data));
             if(data.data.userType == adminTypeValue){
                 history.push("/admin");
-                console.log("等于 adminTypeValue")
             }else{
                 history.push("/");
-                console.log("不等于 adminTypeValue")
             }           
             message.success(data.msg);
         }

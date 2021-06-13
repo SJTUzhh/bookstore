@@ -15,7 +15,6 @@ export default class AdminRoute extends React.Component{
     }
 
     checkAuthAndAdmin = (data) => {
-        console.log(data);
         if (data.status >= 0) {
             //检查是否是管理员
             let userType = JSON.parse(localStorage.getItem("user")).userType;
@@ -39,8 +38,6 @@ export default class AdminRoute extends React.Component{
     render() {
 
         const {component: Component, path="/",exact=false,strict=false} = this.props;
-
-        console.log("AdminRoute isAuthed: " + this.state.isAuthed + ", isAdmin: " + this.state.isAdmin);
 
         if (!this.state.hasAuthed) {
             return null;
