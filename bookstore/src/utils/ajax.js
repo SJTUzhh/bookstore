@@ -1,5 +1,11 @@
 import {message} from 'antd';
 
+/**
+ * 后端要用形如“@RequestParam("id") Integer id”接收
+ * @param {*} url 
+ * @param {*} data a Javascript object
+ * @param {*} callback 
+ */
 let postRequest_v2 = (url, data, callback) => {
     let formData = new FormData();
 
@@ -26,6 +32,12 @@ let postRequest_v2 = (url, data, callback) => {
         });
 };
 
+/**
+ * 后端用形如"@Requestbody Map<String, String> params"接收
+ * @param {*} url 
+ * @param {*} json a Javascript object
+ * @param {*} callback 
+ */
 let postRequest = (url, json, callback) => {
 
     let opts = {

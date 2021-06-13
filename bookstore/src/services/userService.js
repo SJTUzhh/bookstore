@@ -2,6 +2,7 @@ import config from 'config';
 import {postRequest} from "../utils/ajax";
 import {history} from '../utils/history';
 import {message} from 'antd';
+import { adminTypeValue } from '../const/Const';
 
 
 
@@ -10,7 +11,13 @@ export const login = (data) => {
     const callback = (data) => {
         if(data.status >= 0) {
             localStorage.setItem('user', JSON.stringify(data.data));
-            history.push("/");
+            if(data.data.userType == adminTypeValue){
+                history.push("/admin");
+                console.log("等于 adminTypeValue")
+            }else{
+                history.push("/");
+                console.log("不等于 adminTypeValue")
+            }           
             message.success(data.msg);
         }
         else{

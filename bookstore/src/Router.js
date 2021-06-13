@@ -2,11 +2,13 @@ import React from 'react';
 import { Router, Route, Switch, Redirect} from 'react-router-dom';
 import PrivateRoute from './PrivateRoute'
 import LoginRoute from  './LoginRoute'
+import AdminRoute from './AdminRoute'
 import HomeView from "./view/HomeView";
 import LoginView from './view/LoginView'
 import {history} from "./utils/history";
 import BookView from "./view/BookView";
 import CartView from "./view/CartView";
+import AdminHomeView from "./view/AdminHomeView"
 
 
 class BasicRoute extends React.Component{
@@ -28,6 +30,8 @@ class BasicRoute extends React.Component{
                     <LoginRoute exact path="/login" component={LoginView} />
                     <PrivateRoute exact path="/bookDetails" component={BookView} />
                     <PrivateRoute exact path="/cart" component={CartView} />
+                    <AdminRoute exact path="/admin" component={AdminHomeView} />
+                    {/* 管理员可以手动输入url访问顾客的页面 */}
                     <Redirect from="/*" to="/" />
                 </Switch>
 
