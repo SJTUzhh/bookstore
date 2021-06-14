@@ -11,6 +11,7 @@ import '../css/bookDetail.css'
 const { ButtonGroup } = Button.Group;
 const { Header, Content, Footer } = Layout;
 
+//TODO: 可重构代码，将const都写入一个const文件里去
 const columns = [
     {
         title: 'name',
@@ -105,6 +106,7 @@ class CartView extends React.Component {
         })     
     }
 
+    //TODO: 后续可重构代码，将Table写到一个CartList组件里
     render() {
         return (
             <Layout className="layout">

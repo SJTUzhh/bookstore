@@ -2,11 +2,11 @@ import React from 'react';
 import {Layout, Carousel} from 'antd'
 import {HeaderInfo} from "../components/HeaderInfo";
 import {AdminSideBar} from "../components/AdminSideBar";
-import '../css/home.css'
 import {withRouter} from "react-router-dom";
 import {BookCarousel} from "../components/BookCarousel";
 import {SearchBar} from "../components/SearchBar";
-import {BookList} from "../components/BookList";
+import {AdminUserList} from "../components/AdminUserList";
+import '../css/home.css'
 
 const { Header, Content, Footer } = Layout;
 
@@ -38,6 +38,7 @@ class AdminUserView extends React.Component{
                             <BookCarousel />
                             <BookList /> */}
                             <p>用户管理页面</p>
+                            <AdminUserList/>
                             <div className={"foot-wrapper"}>
                             </div>
                         </div>

@@ -46,3 +46,8 @@ export const checkSession = (callback) => {
     postRequest(url, {}, callback);
 };
 
+export const getUserAuths = (data, callback) => {
+    const url = `${config.apiUrl}/getUserAuths`;
+    postRequest(url, data, callback);
+}
+

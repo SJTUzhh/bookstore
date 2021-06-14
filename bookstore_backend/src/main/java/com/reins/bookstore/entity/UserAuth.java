@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 /**
  * @ClassName UserAuth
@@ -27,10 +24,13 @@ public class UserAuth {
     private Integer userId;
     private String username;
 
+    // 新加的字段要写getter和setter或者在类前面注解一个@Data，不然不会和数据库的字段关联起来
     //@Transient
     private String password;
 
     private Integer userType;
+
+    private Integer enabled;
 
     public Integer getUserId() {
         return userId;
@@ -62,5 +62,20 @@ public class UserAuth {
 
     public void setUserType(Integer userType) {
         this.userType = userType;
+    }
+
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.userType = enabled;
+    }
+
+    public UserAuth(){}
+    public UserAuth(Integer userId, String username, Integer enabled){
+        this.userId = userId;
+        this.username = username;
+        this.enabled = enabled;
     }
 }

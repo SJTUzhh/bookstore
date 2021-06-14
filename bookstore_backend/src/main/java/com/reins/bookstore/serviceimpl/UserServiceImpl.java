@@ -6,6 +6,8 @@ import com.reins.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @ClassName UserServiceImpl
  * @Description the implement of user service
@@ -21,7 +23,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserAuth checkUser(String username, String password){
         return userDao.checkUser(username,password);
-
-
     }
+
+    @Override
+    public List<UserAuth> getUserAuths(){
+        return userDao.getUserAuths();
+    }
+
 }

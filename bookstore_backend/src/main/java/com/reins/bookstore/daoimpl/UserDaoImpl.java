@@ -6,7 +6,10 @@ import com.reins.bookstore.entity.UserAuth;
 import com.reins.bookstore.repository.UserAuthRepository;
 import com.reins.bookstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @ClassName UserDaoImpl
@@ -29,5 +32,8 @@ public class UserDaoImpl implements UserDao {
         return userAuthRepository.checkUser(username,password);
     }
 
-
+    @Override
+    public List<UserAuth> getUserAuths() {
+        return userAuthRepository.getUserAuths();
+    }
 }
