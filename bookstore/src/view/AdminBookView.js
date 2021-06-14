@@ -7,6 +7,7 @@ import {withRouter} from "react-router-dom";
 import {BookCarousel} from "../components/BookCarousel";
 import {SearchBar} from "../components/SearchBar";
 import {BookList} from "../components/BookList";
+import { AdminBookTable } from "../components/AdminBookTable";
 
 const { Header, Content, Footer } = Layout;
 
@@ -38,6 +39,7 @@ class AdminBookView extends React.Component{
                             <BookCarousel />
                             <BookList /> */}
                             <p>书籍管理页面</p>
+                            <AdminBookTable/>
                             <div className={"foot-wrapper"}>
                             </div>
                         </div>

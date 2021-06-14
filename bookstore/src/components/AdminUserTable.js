@@ -74,7 +74,6 @@ export class AdminUserList extends React.Component {
     componentDidMount() {
 
         const callback = (data) => {
-            console.log(data);
             this.setState({ dataSource: data });
         };
 

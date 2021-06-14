@@ -5,7 +5,7 @@ import {AdminSideBar} from "../components/AdminSideBar";
 import {withRouter} from "react-router-dom";
 import {BookCarousel} from "../components/BookCarousel";
 import {SearchBar} from "../components/SearchBar";
-import {AdminUserList} from "../components/AdminUserList";
+import {AdminUserList} from "../components/AdminUserTable";
 import '../css/home.css'
 
 const { Header, Content, Footer } = Layout;
