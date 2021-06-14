@@ -5,7 +5,7 @@ import com.reins.bookstore.entity.Cart;
 import com.reins.bookstore.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.reins.bookstore.entity.CartPK;
+import com.reins.bookstore.entity.compositePK.CartPK;
 
 import java.util.List;
 

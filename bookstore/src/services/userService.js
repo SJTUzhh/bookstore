@@ -1,5 +1,5 @@
 import config from 'config';
-import {postRequest} from "../utils/ajax";
+import {postRequest, postRequest_v2} from "../utils/ajax";
 import {history} from '../utils/history';
 import {message} from 'antd';
 import { adminTypeValue } from '../const/Const';
@@ -51,3 +51,7 @@ export const getUserAuths = (data, callback) => {
     postRequest(url, data, callback);
 }
 
+export const changeUserAuthEnabled = (data, callback) => {
+    const url = `${config.apiUrl}/changeUserAuthEnabled`;
+    postRequest_v2(url, data, callback);
+}

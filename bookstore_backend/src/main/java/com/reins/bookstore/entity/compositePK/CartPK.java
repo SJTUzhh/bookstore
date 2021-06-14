@@ -1,4 +1,4 @@
-package com.reins.bookstore.entity;
+package com.reins.bookstore.entity.compositePK;
 
 import lombok.Data;
 

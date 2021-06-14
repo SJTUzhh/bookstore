@@ -1,9 +1,8 @@
 package com.reins.bookstore.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.reins.bookstore.entity.compositePK.CartPK;
 import lombok.Data;
 
 import javax.persistence.*;

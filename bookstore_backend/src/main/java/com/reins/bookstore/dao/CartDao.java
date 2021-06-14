@@ -1,7 +1,7 @@
 package com.reins.bookstore.dao;
 
 import com.reins.bookstore.entity.Cart;
-import com.reins.bookstore.entity.CartPK;
+import com.reins.bookstore.entity.compositePK.CartPK;
 
 import java.util.List;
 

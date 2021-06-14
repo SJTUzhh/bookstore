@@ -3,6 +3,7 @@ package com.reins.bookstore.serviceimpl;
 import com.reins.bookstore.dao.UserDao;
 import com.reins.bookstore.entity.UserAuth;
 import com.reins.bookstore.service.UserService;
+import com.reins.bookstore.utils.msgutils.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserAuth> getUserAuths(){
         return userDao.getUserAuths();
+    }
+
+    @Override
+    public Msg changeUserAuthEnabled(Integer userId, Integer enabled) {
+        return userDao.changeUserAuthEnabled(userId, enabled);
     }
 
 }

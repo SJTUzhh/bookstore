@@ -13,6 +13,7 @@ public class Constant {
     public static final String USER_TYPE = "userType";
     public static final String REMEMBER_ME = "remember";
     public static final String JSESSIONID = "JSESSIONID";
+    public static final String ENABLED = "enabled";
 
     public static final Integer NO_SUCH_USER = -1;
     public static final Integer MANAGER = 0;

@@ -1,8 +1,7 @@
 package com.reins.bookstore.repository;
 
-import com.reins.bookstore.entity.Book;
 import com.reins.bookstore.entity.Cart;
-import com.reins.bookstore.entity.CartPK;
+import com.reins.bookstore.entity.compositePK.CartPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,8 +1,7 @@
 package com.reins.bookstore.service;
 
-import com.reins.bookstore.entity.Book;
 import com.reins.bookstore.entity.Cart;
-import com.reins.bookstore.entity.CartPK;
+import com.reins.bookstore.entity.compositePK.CartPK;
 
 import java.util.List;
 

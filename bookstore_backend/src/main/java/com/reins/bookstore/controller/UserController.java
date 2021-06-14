@@ -1,8 +1,10 @@
 package com.reins.bookstore.controller;
 
+import com.reins.bookstore.constant.Constant;
 import com.reins.bookstore.entity.User;
 import com.reins.bookstore.entity.UserAuth;
 import com.reins.bookstore.service.UserService;
+import com.reins.bookstore.utils.msgutils.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +41,9 @@ public class UserController {
         return null;
     }
 
-
-
+    @RequestMapping("changeUserAuthEnabled")
+    public Msg changeUserAuthEnabled(@RequestParam("userId") Integer userId, @RequestParam("enabled") Integer enabled ){
+        return userService.changeUserAuthEnabled(userId, enabled);
+    }
 
 }

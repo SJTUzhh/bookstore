@@ -3,7 +3,6 @@ package com.reins.bookstore.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Data;
 
 import javax.persistence.*;
 
@@ -69,13 +68,19 @@ public class UserAuth {
     }
 
     public void setEnabled(Integer enabled) {
-        this.userType = enabled;
+        this.enabled = enabled;
     }
 
     public UserAuth(){}
+
     public UserAuth(Integer userId, String username, Integer enabled){
         this.userId = userId;
         this.username = username;
         this.enabled = enabled;
+    }
+
+    public String toString(){
+        return "UserAuth: userId=" + userId + ", username=" + username + ", userType=" + userType +
+                ", enabled=" + enabled + "\n";
     }
 }
