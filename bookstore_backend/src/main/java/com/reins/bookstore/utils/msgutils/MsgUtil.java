@@ -22,6 +22,7 @@ public class MsgUtil {
     public static final String ERROR_MSG = "错误！";
     public static final String LOGIN_USER_ERROR_MSG = "用户名或密码错误，请重新输入！";
     public static final String NOT_LOGGED_IN_ERROR_MSG = "登录失效，请重新登录！";
+    public static final String USER_DISABLED_MSG = "该用户已被禁用，登录失败！";
 
 
 

@@ -57,8 +57,6 @@ export class AdminUserList extends React.Component {
                 dataIndex: 'enabled',
                 key: 'enabled',
                 render: (text, record) => {
-                    console.log(record);
-                    console.log("record.enabled", record.enabled)
                     return <CustomSwitch  
                         checked={record.enabled?true:false}
                         userId={record.userId}

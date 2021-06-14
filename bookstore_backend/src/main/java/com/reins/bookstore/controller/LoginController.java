@@ -47,17 +47,20 @@ public class LoginController {
         String password = params.get(Constant.PASSWORD);
         UserAuth auth = userService.checkUser(username, password);
         if(auth != null){
+            if(auth.getEnabled() != Constant.DISABLED){
+                JSONObject obj = new JSONObject();
+                obj.put(Constant.USER_ID, auth.getUserId());
+                obj.put(Constant.USERNAME, auth.getUsername());
+                obj.put(Constant.USER_TYPE, auth.getUserType());
+                SessionUtil.setSession(obj);
 
-            JSONObject obj = new JSONObject();
-            obj.put(Constant.USER_ID, auth.getUserId());
-            obj.put(Constant.USERNAME, auth.getUsername());
-            obj.put(Constant.USER_TYPE, auth.getUserType());
-            SessionUtil.setSession(obj);
+                JSONObject data = JSONObject.fromObject(auth);
+                data.remove(Constant.PASSWORD);
 
-            JSONObject data = JSONObject.fromObject(auth);
-            data.remove(Constant.PASSWORD);
-
-            return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.LOGIN_SUCCESS_MSG, data);
+                return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.LOGIN_SUCCESS_MSG, data);
+            }else{
+                return MsgUtil.makeMsg(MsgCode.LOGIN_USER_ERROR, MsgUtil.USER_DISABLED_MSG);
+            }
         }
         else{
             return MsgUtil.makeMsg(MsgCode.LOGIN_USER_ERROR);
