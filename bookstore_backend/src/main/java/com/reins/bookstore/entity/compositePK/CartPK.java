@@ -9,8 +9,7 @@ public class CartPK implements Serializable {
     private int userId;
     private int bookId;
 
-    public CartPK(){
-    }
+    public CartPK(){}
     public CartPK(int userId, int bookId){
         this.bookId = bookId;
         this.userId = userId;

@@ -22,9 +22,7 @@ public class Cart {
     private int bookId;
     private int count;
 
-    public Cart(){
-
-    }
+    public Cart(){}
 
     public Cart(int userId, int bookId, int count){
         this.bookId = bookId;
