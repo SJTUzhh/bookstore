@@ -1,7 +1,9 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Table, Input, Button, Popconfirm, Form, message } from 'antd';
-import { getBooks, commitBook, deleteBook, addBook } from "../services/bookService"
+import { getBook, getBooks, commitBook, deleteBook, addBook } from "../services/bookService"
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 //import './index.css';
 
 const EditableContext = React.createContext();
@@ -110,8 +112,8 @@ export class AdminBookTable extends React.Component {
                 editable: true,
                 render: (text, record) => {
                     return <span>
-                    {text}
-                    <a href={text}>   预览</a> 
+                        {text}
+                        <a href={text}>   预览</a>
                     </span>
                 }
             },
@@ -146,47 +148,23 @@ export class AdminBookTable extends React.Component {
         ];
 
         this.state = {
-            dataSource: [
-                {
-                    bookId: '1',
-                    name: 'Java核心技术卷II',
-                    author: '凯S.霍斯特曼',
-                    image: "http://img3m9.ddimg.cn/12/36/1546133799-1_w_1.jpg",
-                    isbn: '1',
-                    inventory: 1000,
-                },
-                {
-                    bookId: '2',
-                    name: '深入理解计算机系统',
-                    author: '兰德尔·E·布莱恩特',
-                    image: "http://img3m7.ddimg.cn/48/0/24106647-1_w_6.jpg",
-                    isbn: '2',
-                    inventory: 1200,
-                }
-            ]
+            dataSource: [],
+            filteredData: []
         };
     }
- 
+
     //本地+数据库
+    //点击Add按钮自动取消当前搜索
     handleAdd = () => {
         const dataSource = this.state.dataSource;
         const callback = (newBookData) => {
             this.setState({
-                dataSource: [...dataSource, newBookData]
+                dataSource: [...dataSource, newBookData],
+                filteredData: [...dataSource, newBookData]
             });
             message.success("添加成功！(bookId: " + newBookData.bookId + ")");
         }
-        addBook(callback);
-
-        // const { dataSource } = this.state;
-        // const newData = {
-        //     bookId: count + 1,
-        //     name: 'xxxxxxx',
-        //     author: 'xxxxxxx',
-        //     image: "xxxxxxx",
-        //     isbn: (count + 1).toString(),
-        //     inventory: 0,
-        // };      
+        addBook(callback);  
     };
 
     //本地
@@ -204,7 +182,11 @@ export class AdminBookTable extends React.Component {
     //本地+数据库
     handleDelete = bookId => {
         const dataSource = [...this.state.dataSource];
-        this.setState({ dataSource: dataSource.filter(item => item.bookId !== bookId) });
+        const filteredData = [...this.state.filteredData];
+        this.setState({
+            dataSource: dataSource.filter(item => item.bookId !== bookId),
+            filteredData: filteredData.filter(item => item.bookId !== bookId)
+        });
         this.rowDelete(bookId);
     };
 
@@ -215,29 +197,29 @@ export class AdminBookTable extends React.Component {
 
         //check validation
         //type validation should be carried by the table
-        if (data.inventory < 0){
+        if (data.inventory < 0) {
             message.error("提交失败：inventory不能小于0！ bookId：" + bookId);
         }
-        
+
         //commit
         const callback = (data) => {
-            if(data != null && data.status >= 0){
+            if (data != null && data.status >= 0) {
                 message.success(data.msg);
             }
-            else{
+            else {
                 message.error("提交不正常！");
             }
         }
-        commitBook(data, callback);   
+        commitBook(data, callback);
     }
 
     //数据库的”删除“
     rowDelete = bookId => {
         const callback = (data) => {
-            if(data != null && data.status >= 0){
+            if (data != null && data.status >= 0) {
                 message.success(data.msg);
             }
-            else{
+            else {
                 message.error("删除不正常！");
             }
         }
@@ -249,18 +231,36 @@ export class AdminBookTable extends React.Component {
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
         const callback = (data) => {
             console.log(data);
-            this.setState({ dataSource: data });
+            this.setState({ dataSource: data, filteredData: data });
         };
 
-        getBooks({"search": null}, callback);
+        getBooks({ "search": null }, callback);
+    }
+
+    handleSearch = selectedOption => {
+        const callback1 = (data) => {
+            console.log(data);
+            this.setState({ filteredData: [data] });
+        };
+        const callback2 = (data) => {
+            console.log(data);
+            this.setState({ filteredData: data });
+        };
+
+        if (selectedOption != null) {
+            const bookId = selectedOption.bookId;
+            getBook(bookId, callback1);
+        } else {
+            getBooks({ "search": null }, callback2);
+        }
     }
 
     render() {
-        const { dataSource } = this.state;
+        const { filteredData } = this.state;
         const components = {
             body: {
                 row: EditableFormRow,
@@ -284,6 +284,14 @@ export class AdminBookTable extends React.Component {
         });
         return (
             <div>
+                <Autocomplete
+                    id="admin-book-search"
+                    options={this.state.dataSource}
+                    getOptionLabel={(option) => option.name}
+                    onChange={(event, selectedOption) => this.handleSearch(selectedOption)}
+                    style={{ width: 300 }}
+                    renderInput={(params) => <TextField {...params} label="按书名搜索" variant="outlined" />}
+                />
                 <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16 }}>
                     Add a row
                 </Button>
@@ -291,7 +299,7 @@ export class AdminBookTable extends React.Component {
                     components={components}
                     rowClassName={() => 'editable-row'}
                     bordered
-                    dataSource={dataSource}
+                    dataSource={filteredData}
                     columns={columns}
                 />
             </div>
