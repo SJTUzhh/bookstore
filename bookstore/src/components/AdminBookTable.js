@@ -4,7 +4,7 @@ import { Table, Input, Button, Popconfirm, Form, message } from 'antd';
 import { getBook, getBooks, commitBook, deleteBook, addBook } from "../services/bookService"
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-//import './index.css';
+import { BookDetailModal } from './BookDetailModal';
 
 const EditableContext = React.createContext();
 
@@ -137,8 +137,9 @@ export class AdminBookTable extends React.Component {
                         </Popconfirm>
                     ) : null;
                     return (<span>
-                        <Button type="normal" onClick={() => this.rowDetail(record.bookId)}>详情</Button>
+                        <BookDetailModal bookInfo={record}></BookDetailModal>
                         <Button type="primary" onClick={() => this.rowCommit(record)}>提交</Button>
+                        
                         {deleteButton}
                     </span>)
                 }
@@ -236,11 +237,6 @@ export class AdminBookTable extends React.Component {
             }
         }
         deleteBook(bookId, callback);
-    }
-
-    rowDetail = bookId => {
-        message.success("Detail for bookId: " + bookId);
-
     }
 
     componentDidMount() {
