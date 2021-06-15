@@ -13,3 +13,20 @@ export const getBook = (id, callback) => {
     postRequest_v2(url, data, callback);
 
 };
+
+export const commitBook = (data, callback) => {
+    const url = `${config.apiUrl}/commitBook`;
+    postRequest_v2(url, data, callback);
+}
+
+export const deleteBook = (bookId, callback) => {
+    const url = `${config.apiUrl}/deleteBook`;
+    const data = {bookId: bookId};
+    postRequest_v2(url, data, callback);
+}
+
+//在数据库中addBook，返回数据库中add的书
+export const addBook = (callback) => {
+    const url = `${config.apiUrl}/addBook`;
+    postRequest_v2(url, {}, callback);
+}

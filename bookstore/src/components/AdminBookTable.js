@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Table, Input, Button, Popconfirm, Form, message } from 'antd';
-import {getBooks} from "../services/bookService"
+import { getBooks, commitBook, deleteBook, addBook } from "../services/bookService"
 //import './index.css';
 
 const EditableContext = React.createContext();
@@ -108,11 +108,17 @@ export class AdminBookTable extends React.Component {
                 title: 'Cover',
                 dataIndex: 'image',
                 editable: true,
+                render: (text, record) => {
+                    return <span>
+                    {text}
+                    <a href={text}>   预览</a> 
+                    </span>
+                }
             },
             {
                 title: 'ISBN',
                 dataIndex: 'isbn',
-                editable: true,
+                editable: false,
             },
             {
                 title: 'Inventory',
@@ -130,7 +136,7 @@ export class AdminBookTable extends React.Component {
                     ) : null;
                     return (<span>
                         <Button type="normal" onClick={() => this.rowDetail(record.bookId)}>详情</Button>
-                        <Button type="primary" onClick={() => this.rowCommit(record.bookId)}>提交</Button>
+                        <Button type="primary" onClick={() => this.rowCommit(record)}>提交</Button>
                         {deleteButton}
                     </span>)
                 }
@@ -146,7 +152,7 @@ export class AdminBookTable extends React.Component {
                     name: 'Java核心技术卷II',
                     author: '凯S.霍斯特曼',
                     image: "http://img3m9.ddimg.cn/12/36/1546133799-1_w_1.jpg",
-                    isbn: 1,
+                    isbn: '1',
                     inventory: 1000,
                 },
                 {
@@ -154,36 +160,36 @@ export class AdminBookTable extends React.Component {
                     name: '深入理解计算机系统',
                     author: '兰德尔·E·布莱恩特',
                     image: "http://img3m7.ddimg.cn/48/0/24106647-1_w_6.jpg",
-                    isbn: 2,
+                    isbn: '2',
                     inventory: 1200,
                 }
-            ],
-            count: 2,
+            ]
         };
     }
-
-    handleDelete = bookId => {
-        const dataSource = [...this.state.dataSource];
-        this.setState({ dataSource: dataSource.filter(item => item.bookId !== bookId) });
-        this.rowDelete();
-    };
-
+ 
+    //本地+数据库
     handleAdd = () => {
-        const { count, dataSource } = this.state;
-        const newData = {
-            bookId: count + 1,
-            name: 'xxxxxxx',
-            author: 'xxxxxxx',
-            image: "xxxxxxx",
-            isbn: count + 1,
-            inventory: 0,
-        };
-        this.setState({
-            dataSource: [...dataSource, newData],
-            count: count + 1,
-        });
+        const dataSource = this.state.dataSource;
+        const callback = (newBookData) => {
+            this.setState({
+                dataSource: [...dataSource, newBookData]
+            });
+            message.success("添加成功！(bookId: " + newBookData.bookId + ")");
+        }
+        addBook(callback);
+
+        // const { dataSource } = this.state;
+        // const newData = {
+        //     bookId: count + 1,
+        //     name: 'xxxxxxx',
+        //     author: 'xxxxxxx',
+        //     image: "xxxxxxx",
+        //     isbn: (count + 1).toString(),
+        //     inventory: 0,
+        // };      
     };
 
+    //本地
     handleSave = row => {
         const newData = [...this.state.dataSource];
         const index = newData.findIndex(item => row.bookId === item.bookId);
@@ -195,25 +201,59 @@ export class AdminBookTable extends React.Component {
         this.setState({ dataSource: newData });
     };
 
-    //operation callback:
+    //本地+数据库
+    handleDelete = bookId => {
+        const dataSource = [...this.state.dataSource];
+        this.setState({ dataSource: dataSource.filter(item => item.bookId !== bookId) });
+        this.rowDelete(bookId);
+    };
 
-    rowDetail = row => {
-        message.success("Detail for bookId:" + row);
+    //数据库的"提交修改“
+    rowCommit = data => {
+        console.log(data);
+        let bookId = data.bookId;
+
+        //check validation
+        //type validation should be carried by the table
+        if (data.inventory < 0){
+            message.error("提交失败：inventory不能小于0！ bookId：" + bookId);
+        }
+        
+        //commit
+        const callback = (data) => {
+            if(data != null && data.status >= 0){
+                message.success(data.msg);
+            }
+            else{
+                message.error("提交不正常！");
+            }
+        }
+        commitBook(data, callback);   
     }
 
-    rowCommit = row => {
-        message.success("Commit for bookId:" + row);
+    //数据库的”删除“
+    rowDelete = bookId => {
+        const callback = (data) => {
+            if(data != null && data.status >= 0){
+                message.success(data.msg);
+            }
+            else{
+                message.error("删除不正常！");
+            }
+        }
+        deleteBook(bookId, callback);
     }
 
-    rowDelete = row => {
-        message.success("Delete for bookId:" + row);
+    rowDetail = bookId => {
+        message.success("Detail for bookId: " + bookId);
+
     }
 
     componentDidMount(){
 
         const callback = (data) => {
             console.log(data);
-            this.setState({ dataSource: data , count: data.length});
+            this.setState({ dataSource: data });
         };
 
         getBooks({"search": null}, callback);

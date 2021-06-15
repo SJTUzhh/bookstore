@@ -3,6 +3,8 @@ package com.reins.bookstore.serviceimpl;
 import com.reins.bookstore.dao.BookDao;
 import com.reins.bookstore.entity.Book;
 import com.reins.bookstore.service.BookService;
+import com.reins.bookstore.utils.msgutils.Msg;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +31,20 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> getBooks() {
         return bookDao.getBooks();
+    }
+
+    @Override
+    public Msg commitBook(JSONObject bookParams) {
+        return bookDao.commitBook(bookParams);
+    }
+
+    @Override
+    public Msg deleteBook(Integer bookId) {
+        return bookDao.deleteBook(bookId);
+    }
+
+    @Override
+    public Book addBook() {
+        return bookDao.addBook();
     }
 }

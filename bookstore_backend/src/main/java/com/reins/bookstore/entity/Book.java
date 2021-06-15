@@ -4,12 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
+import lombok.Lombok;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @ClassName Book
@@ -25,6 +23,7 @@ import javax.persistence.Table;
 public class Book {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private int bookId;
 
@@ -36,4 +35,22 @@ public class Book {
     private String description;
     private Integer inventory;
     private String image;
+
+    public Book(){
+        this.isbn = "0";
+        this.name = "default";
+        this.author = "default";
+        this.image = "default";
+        this.inventory = 0;
+    }
+
+//    public Book(Integer bookId, String isbn, String name, String author, String image, Integer inventory){
+//        this.bookId = bookId;
+//        this.isbn = isbn;
+//        this.name = name;
+//        this.author = author;
+//        this.image = image;
+//        this.inventory = inventory;
+//    }
+
 }
