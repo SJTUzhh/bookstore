@@ -169,14 +169,26 @@ export class AdminBookTable extends React.Component {
 
     //本地
     handleSave = row => {
-        const newData = [...this.state.dataSource];
-        const index = newData.findIndex(item => row.bookId === item.bookId);
-        const item = newData[index];
+        //dataSource
+        let newData = [...this.state.dataSource];
+        let index = newData.findIndex(item => row.bookId === item.bookId);
+        let item = newData[index];
         newData.splice(index, 1, {
             ...item,
             ...row,
         });
         this.setState({ dataSource: newData });
+
+        //filteredData
+        newData = [...this.state.filteredData];
+        index = newData.findIndex(item => row.bookId === item.bookId);
+        item = newData[index];
+        newData.splice(index, 1, {
+            ...item,
+            ...row,
+        });
+        this.setState({ filteredData: newData });
+
     };
 
     //本地+数据库
@@ -242,20 +254,17 @@ export class AdminBookTable extends React.Component {
     }
 
     handleSearch = selectedOption => {
-        const callback1 = (data) => {
-            console.log(data);
-            this.setState({ filteredData: [data] });
-        };
-        const callback2 = (data) => {
-            console.log(data);
-            this.setState({ filteredData: data });
-        };
-
         if (selectedOption != null) {
             const bookId = selectedOption.bookId;
-            getBook(bookId, callback1);
+            for(let i = 0; i < this.state.dataSource.length; i++){
+                let book = this.state.dataSource[i]
+                if(book.bookId == bookId){
+                    this.setState({filteredData: [book]})
+                    break;
+                }
+            }
         } else {
-            getBooks({ "search": null }, callback2);
+            this.setState({filteredData: this.state.dataSource})
         }
     }
 
@@ -292,6 +301,7 @@ export class AdminBookTable extends React.Component {
                     style={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label="按书名搜索" variant="outlined" />}
                 />
+                <br></br>
                 <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16 }}>
                     Add a row
                 </Button>
