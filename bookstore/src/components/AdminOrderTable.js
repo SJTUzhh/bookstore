@@ -43,17 +43,13 @@ export class AdminOrderTable extends React.Component {
 
         this.state = {
             dataSource: [],
-            datetimeRange: [new Date(1609488000 * 1000), new Date(1617260400 * 1000)]
+            datetimeRange: [new Date(1209488000 * 1000), new Date()]
         };
     }
 
     componentDidMount() {
 
-        const callback = (data) => {
-            this.setState({ dataSource: data });
-        };
-
-        getOrderInfos({ "beginTimestamp": 0.0, "endTimestamp": 0.0}, callback);
+        this.handleFilterClick();
 
     }
 
@@ -69,8 +65,7 @@ export class AdminOrderTable extends React.Component {
         const beginTimestamp = datetimeRange == null ? 0.0 : datetimeRange[0].getTime();
         const endTimestamp = datetimeRange == null ? 0.0 : datetimeRange[1].getTime();
 
-        getOrderInfos({ "beginTimestamp": beginTimestamp, "endTimestamp": endTimestamp}, callback);
-        
+        getOrderInfos({ "beginTimestamp": beginTimestamp, "endTimestamp": endTimestamp}, callback);      
     }
 
     render() {

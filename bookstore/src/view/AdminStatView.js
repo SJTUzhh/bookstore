@@ -1,12 +1,10 @@
 import React from 'react';
 import {Layout, Carousel} from 'antd'
 import {HeaderInfo} from "../components/HeaderInfo";
+import {AdminStatHotSell} from "../components/AdminStatHotSell";
 import {AdminSideBar} from "../components/AdminSideBar";
 import '../css/home.css'
 import {withRouter} from "react-router-dom";
-import {BookCarousel} from "../components/BookCarousel";
-import {SearchBar} from "../components/SearchBar";
-import {BookList} from "../components/BookList";
 
 const { Header, Content, Footer } = Layout;
 
@@ -38,6 +36,7 @@ class AdminStatView extends React.Component{
                             <BookCarousel />
                             <BookList /> */}
                             <p>统计信息页面</p>
+                            <AdminStatHotSell/>
                             <div className={"foot-wrapper"}>
                             </div>
                         </div>
