@@ -2,6 +2,7 @@ package com.reins.bookstore.entity;
 
 import com.reins.bookstore.entity.compositePK.OrderBookPK;
 import lombok.Data;
+import org.hibernate.annotations.Persister;
 
 import javax.persistence.*;
 
@@ -18,12 +19,16 @@ public class OrderBook {
     private int bookId;
     private int count;
 
+    @Transient
+    private String bookname;
+
     public OrderBook(){}
 
-    public OrderBook(int orderId, int bookId, int count){
+    public OrderBook(int orderId, int bookId, int count, String bookname){
         this.orderId = orderId;
         this.bookId = bookId;
         this.count = count;
+        this.bookname = bookname;
     }
 }
 
