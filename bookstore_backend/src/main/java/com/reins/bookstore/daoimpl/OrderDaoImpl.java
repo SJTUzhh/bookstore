@@ -41,11 +41,13 @@ public class OrderDaoImpl implements OrderDao {
 
     public List<OrderBook> getOrderBooks(){
         List<OrderBook> orderBooks = orderBookRepository.findAll();
-        //fetch book name
+        //fetch bookname and bookPrice
         for(OrderBook orderBook : orderBooks){
-            int bookId = orderBook.getBookId();
-            String bookname = bookRepository.getOne(bookId).getName();
+            Book book = bookRepository.getOne(orderBook.getBookId());
+            String bookname = book.getName();
+            Double bookPrice = book.getPrice();
             orderBook.setBookname(bookname);
+            orderBook.setBookPrice(bookPrice);
         }
         return orderBooks;
     }

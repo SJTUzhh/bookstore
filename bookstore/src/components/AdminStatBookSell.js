@@ -3,7 +3,7 @@ import { Table, Button } from 'antd';
 import { getOrderInfos } from '../services/orderService';
 import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
 
-export class AdminStatHotSell extends React.Component {
+export class AdminStatBookSell extends React.Component {
 
     constructor(props) {
         super(props);
@@ -75,34 +75,34 @@ export class AdminStatHotSell extends React.Component {
                     bookname: data[i].bookname,
                     count: data[i].count
                 })
-            }           
+            }
         }
-        this.setState({bookSellData: bookSellData});
+        this.setState({ bookSellData: bookSellData });
     }
-        
-        render() {
 
-            return (
+    render() {
+
+        return (
+            <div>
                 <div>
-                    <div>
-                        <DateTimeRangePicker
-                            onChange={this.handlePickerChange}
-                            value={this.state.datetimeRange}
-                            format={"y-MM-dd H:mm"}
-                            disableClock
-                            formatShortWeekday={(locale, value) =>
-                                ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"][value.getDay()]
-                            }
-                            hourAriaLabel="hour"
-                            dayAriaLabel="day"
-                        />
-                        <Button onClick={this.handleFilterClick}>过滤</Button>
-                    </div>
+                    <DateTimeRangePicker
+                        onChange={this.handlePickerChange}
+                        value={this.state.datetimeRange}
+                        format={"y-MM-dd H:mm"}
+                        disableClock
+                        formatShortWeekday={(locale, value) =>
+                            ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"][value.getDay()]
+                        }
+                        hourAriaLabel="hour"
+                        dayAriaLabel="day"
+                    />
+                    <Button onClick={this.handleFilterClick}>过滤</Button>
+                </div>
 
-                    <br />
+                <br />
 
-                    <Table columns={this.columns} dataSource={this.state.bookSellData} />
-                </div>);
-        }
-
+                <Table columns={this.columns} dataSource={this.state.bookSellData} />
+            </div>);
     }
+
+}

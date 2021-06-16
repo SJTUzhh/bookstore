@@ -1,27 +1,35 @@
 import React from 'react';
-import {Layout, Carousel} from 'antd'
-import {HeaderInfo} from "../components/HeaderInfo";
-import {AdminStatHotSell} from "../components/AdminStatHotSell";
-import {AdminSideBar} from "../components/AdminSideBar";
+import { Layout, Tabs } from 'antd'
+import { HeaderInfo } from "../components/HeaderInfo";
+import { AdminStatBookSell } from "../components/AdminStatBookSell";
+import { AdminStatConsumer } from "../components/AdminStatConsumer";
+import { AdminSideBar } from "../components/AdminSideBar";
+import { withRouter } from "react-router-dom";
+import 'antd/dist/antd.css';
 import '../css/home.css'
-import {withRouter} from "react-router-dom";
 
+const { TabPane } = Tabs;
 const { Header, Content, Footer } = Layout;
 
-class AdminStatView extends React.Component{
+class AdminStatView extends React.Component {
 
     constructor(props) {
         super(props);
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         let user = localStorage.getItem("user");
-        this.setState({user:user});
+        this.setState({ user: user });
     }
 
-    render(){
-        return(
+    onTabChange = (key) => {
+        //console.log(key);
+    }
+      
+
+    render() {
+        return (
             <Layout className="layout">
 
                 <Header>
@@ -31,12 +39,15 @@ class AdminStatView extends React.Component{
                     <AdminSideBar />
                     <Content style={{ padding: '0 50px' }}>
                         <div className="home-content">
-                            {/* <SearchBar />
-
-                            <BookCarousel />
-                            <BookList /> */}
                             <p>统计信息页面</p>
-                            <AdminStatHotSell/>
+                            <Tabs defaultActiveKey="1" onChange={this.onTabChange}>
+                                <TabPane tab="热销榜" key="1">
+                                    <AdminStatBookSell />
+                                </TabPane>
+                                <TabPane tab="消费榜" key="2">
+                                    <AdminStatConsumer/>
+                                </TabPane>
+                            </Tabs>
                             <div className={"foot-wrapper"}>
                             </div>
                         </div>

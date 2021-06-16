@@ -46,7 +46,7 @@ export class AdminSideBar extends React.Component {
             <div style={{width:this.state.collapsed? "80px":"180px", maxWidth:this.state.collapsed? "80px":"180px", minWidth:this.state.collapsed? "80px":"180px" }}>
             <div className="mySider">
             <Sider collapsible collapsed={this.state.collapsed} width="180px" onCollapse={this.onCollapse} className="sider" style={{ background: '#fff'}}>
-                <Menu defaultSelectedKeys={['1']} mode="inline">
+                <Menu defaultSelectedKeys={[/*'1'*/]} mode="inline">
                     <Menu.Item key="1" onClick={this.homeOnClick}>
                         <Icon type="home" style={{ fontSize: '18px'}}/>
                         <span style={{ fontSize: '16px'}}>主页</span>

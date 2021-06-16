@@ -10,7 +10,9 @@ public class OrderInfo {
     private LocalDateTime datetime;
     private int userId;
     private int bookId;
+
     private String bookname;
+    private Double bookPrice;
     private int count;
 
     public OrderInfo() {}
@@ -22,6 +24,7 @@ public class OrderInfo {
         this.bookId = orderBook.getBookId();
         this.bookname = orderBook.getBookname();
         this.count = orderBook.getCount();
+        this.bookPrice = orderBook.getBookPrice();
     }
 
 }
