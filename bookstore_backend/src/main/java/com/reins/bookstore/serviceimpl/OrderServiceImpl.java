@@ -15,8 +15,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao;
 
     @Override
-    public List<Order> getOrders(){
-        return orderDao.getOrders();
+    public List<Order> getOrders(Long beginTimestamp, Long endTimestamp){
+        return orderDao.getOrders(beginTimestamp, endTimestamp);
     }
 
     @Override

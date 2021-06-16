@@ -6,6 +6,6 @@ import com.reins.bookstore.entity.OrderBook;
 import java.util.List;
 
 public interface OrderDao {
-    List<Order> getOrders();
+    List<Order> getOrders(Long beginTimestamp, Long endTimestamp);
     List<OrderBook> getOrderBooks();
 }

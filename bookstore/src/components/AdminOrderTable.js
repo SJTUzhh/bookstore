@@ -1,40 +1,7 @@
 import React from 'react';
-import { Table } from 'antd';
-import Switch from '@material-ui/core/Switch'
-import { getUserAuths, changeUserAuthEnabled } from "../services/userService";
-import {message} from 'antd';
+import { Table, Button } from 'antd';
 import { getOrderInfos } from '../services/orderService';
-//import { useTable } from "react-table";
-
-// //写成一个受控组件的形式，只会和自己的state同步。除了第一次construct和props的值有关，之后就与props无关了
-// class CustomSwitch extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = { checked: this.props.checked};
-//         this.handleChange = this.handleChange.bind(this);
-//         this.userId = this.props.userId;
-//     }
-
-//     handleChange(checked) {
-//         this.setState({ checked: checked});
-//         let data = {userId: this.userId, enabled: (checked?1:0)}
-//         const callback = (data) => {
-//             if(data != null && data.status >= 0){
-//                 message.success(data.msg);
-//             }
-//         }
-//         changeUserAuthEnabled(data, callback);
-//     }
-
-//     render() {
-//         return <Switch
-//             checked={this.state.checked}
-//             onChange={(event) => {
-//                 this.handleChange(event.target.checked)
-//             }}
-//         />
-//     }
-// }
+import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
 
 export class AdminOrderTable extends React.Component {
 
@@ -51,6 +18,9 @@ export class AdminOrderTable extends React.Component {
                 title: 'Datetime',
                 dataIndex: 'datetime',
                 key: 'datetime',
+                render: text => {
+                    return text.replace("T", "  ")
+                }
             },
             {
                 title: 'User Id',
@@ -72,7 +42,8 @@ export class AdminOrderTable extends React.Component {
         ];
 
         this.state = {
-            dataSource: []
+            dataSource: [],
+            datetimeRange: [new Date(1609488000 * 1000), new Date(1617260400 * 1000)]
         };
     }
 
@@ -82,12 +53,49 @@ export class AdminOrderTable extends React.Component {
             this.setState({ dataSource: data });
         };
 
-        getOrderInfos({ "search": null }, callback);
+        getOrderInfos({ "beginTimestamp": 0.0, "endTimestamp": 0.0}, callback);
 
     }
 
+    handlePickerChange = (value) => {
+        this.setState({ datetimeRange: value });
+    }
+
+    handleFilterClick = () => {
+        const callback = (data) => {
+            this.setState({ dataSource: data });
+        }
+        const datetimeRange = this.state.datetimeRange;
+        const beginTimestamp = datetimeRange == null ? 0.0 : datetimeRange[0].getTime();
+        const endTimestamp = datetimeRange == null ? 0.0 : datetimeRange[1].getTime();
+
+        getOrderInfos({ "beginTimestamp": beginTimestamp, "endTimestamp": endTimestamp}, callback);
+        
+    }
+
     render() {
-        return <Table columns={this.columns} dataSource={this.state.dataSource} />
+
+        return (
+            <div>
+                <div>
+                    <DateTimeRangePicker
+                        onChange={this.handlePickerChange}
+                        value={this.state.datetimeRange}
+                        format={"y-MM-dd H:mm"}
+                        disableClock
+                        formatShortWeekday={(locale, value) =>
+                            ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"][value.getDay()]
+                        }
+                        hourAriaLabel="hour"
+                        dayAriaLabel="day"
+                    />
+                    <Button onClick={this.handleFilterClick}>过滤</Button>
+                </div>
+
+                <br />
+
+                <Table columns={this.columns} dataSource={this.state.dataSource} />
+            </div>);
     }
 
 }

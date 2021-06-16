@@ -10,7 +10,10 @@ import com.reins.bookstore.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.TimeZone;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
@@ -24,8 +27,16 @@ public class OrderDaoImpl implements OrderDao {
     BookRepository bookRepository;
 
     @Override
-    public List<Order> getOrders(){
-        return orderRepository.getOrders();
+    public List<Order> getOrders(Long beginTimestamp, Long endTimestamp){
+        if(beginTimestamp == 0 || endTimestamp == 0){
+            // 必须两个都提供，否则不过滤
+            return orderRepository.findAll();
+        }
+        else{
+            LocalDateTime begin = LocalDateTime.ofInstant(Instant.ofEpochMilli(beginTimestamp), TimeZone.getDefault().toZoneId());
+            LocalDateTime end = LocalDateTime.ofInstant(Instant.ofEpochMilli(endTimestamp), TimeZone.getDefault().toZoneId());
+            return orderRepository.findOrdersByDatetimeAfterAndDatetimeBefore(begin, end);
+        }
     }
 
     public List<OrderBook> getOrderBooks(){

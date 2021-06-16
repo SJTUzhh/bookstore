@@ -6,6 +6,7 @@ import com.reins.bookstore.entity.OrderInfo;
 import com.reins.bookstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -19,8 +20,9 @@ public class OrderController {
     private OrderService orderService;
 
     @RequestMapping("/getOrderInfos")
-    public List<OrderInfo> getOrderInfos(){
-        List<Order> orders = getOrders();
+    public List<OrderInfo> getOrderInfos(@RequestParam("beginTimestamp") Long beginTimestamp,
+                                         @RequestParam("endTimestamp") Long endTimestamp){
+        List<Order> orders = getOrders(beginTimestamp, endTimestamp);
         List<OrderBook> orderBooks = getOrderBooks();
         List<OrderInfo> orderInfos = new ArrayList<>();
 
@@ -33,6 +35,7 @@ public class OrderController {
         for(OrderBook orderBook : orderBooks){
             int orderId = orderBook.getOrderId();
             Order order = orderMap.get(orderId);
+            if(order == null) continue; // 针对过滤的情况
             orderInfos.add(new OrderInfo(order, orderBook));
         }
 
@@ -40,8 +43,8 @@ public class OrderController {
     }
 
     @RequestMapping("/getOrders")
-    public List<Order> getOrders(){
-        return orderService.getOrders();
+    public List<Order> getOrders(Long beginTimestamp, Long endTimestamp){
+        return orderService.getOrders(beginTimestamp, endTimestamp);
     }
 
     @RequestMapping("/getOrderBooks")
