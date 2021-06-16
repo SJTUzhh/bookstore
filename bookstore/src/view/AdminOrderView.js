@@ -4,6 +4,7 @@ import {HeaderInfo} from "../components/HeaderInfo";
 import {AdminSideBar} from "../components/AdminSideBar";
 import '../css/home.css'
 import {withRouter} from "react-router-dom";
+import {AdminOrderTable} from "../components/AdminOrderTable";
 import {BookCarousel} from "../components/BookCarousel";
 import {SearchBar} from "../components/SearchBar";
 import {BookList} from "../components/BookList";
@@ -38,6 +39,7 @@ class AdminOrderView extends React.Component{
                             <BookCarousel />
                             <BookList /> */}
                             <p>订单管理页面</p>
+                            <AdminOrderTable/>                        
                             <div className={"foot-wrapper"}>
                             </div>
                         </div>

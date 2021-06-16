@@ -20,6 +20,7 @@ public class OrderInfo {
         this.datetime = order.getDatetime();
         this.userId = order.getUserId();
         this.bookId = orderBook.getBookId();
+        this.bookname = orderBook.getBookname();
         this.count = orderBook.getCount();
     }
 
