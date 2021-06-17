@@ -54,7 +54,7 @@ class LoginForm extends React.Component {
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         Log in
                     </Button>
-                    Or <a href="">register now!</a>
+                    Or <a href="/register">register now!</a>
                 </Form.Item>
             </Form>
         );

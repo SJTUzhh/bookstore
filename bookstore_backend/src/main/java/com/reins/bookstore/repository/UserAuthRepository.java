@@ -21,4 +21,6 @@ public interface UserAuthRepository extends JpaRepository<UserAuth, Integer>{
     List<UserAuth> getAllCustomers();
 
     UserAuth findUserAuthByUserId(Integer userId);
+
+    UserAuth findUserAuthByUsername(String username);
 }

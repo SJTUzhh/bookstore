@@ -11,4 +11,6 @@ public interface UserService {
     UserAuth checkUser(String username, String password);
     List<UserAuth> getUserAuths();
     Msg changeUserAuthEnabled(Integer userId, Integer enabled);
+
+    UserAuth checkUsernameExist(String username);
 }

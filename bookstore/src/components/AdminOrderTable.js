@@ -20,7 +20,8 @@ export class AdminOrderTable extends React.Component {
                 key: 'datetime',
                 render: text => {
                     return text.replace("T", "  ")
-                }
+                },
+                sorter: (a, b) => (a.datetime > b.datetime)
             },
             {
                 title: 'User Id',
@@ -43,7 +44,7 @@ export class AdminOrderTable extends React.Component {
 
         this.state = {
             dataSource: [],
-            datetimeRange: [new Date(1209488000 * 1000), new Date()]
+            datetimeRange: [new Date(1609488000 * 1000), new Date()]
         };
     }
 

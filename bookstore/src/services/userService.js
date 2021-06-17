@@ -55,3 +55,9 @@ export const changeUserAuthEnabled = (data, callback) => {
     const url = `${config.apiUrl}/changeUserAuthEnabled`;
     postRequest_v2(url, data, callback);
 }
+
+export const checkUsernameExist = (username, callback) => {
+    const data = {username: username};
+    const url = `${config.apiUrl}/checkUsernameExist`;
+    postRequest_v2(url, data, callback);
+}

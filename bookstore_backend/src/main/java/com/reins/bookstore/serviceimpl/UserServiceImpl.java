@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService {
         return userDao.changeUserAuthEnabled(userId, enabled);
     }
 
+    @Override
+    public UserAuth checkUsernameExist(String username) {
+        return userDao.checkUsernameExist(username);
+    }
+
 }

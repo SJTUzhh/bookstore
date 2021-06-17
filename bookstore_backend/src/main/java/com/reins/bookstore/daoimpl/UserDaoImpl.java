@@ -39,12 +39,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Msg changeUserAuthEnabled(Integer userId, Integer enabled) {
-//        boolean userAuthExists = userAuthRepository.existsById(userId);
-//        if(userAuthExists) {
-//        }
         UserAuth userAuth = userAuthRepository.findUserAuthByUserId(userId);
         if(userAuth != null){
-            System.out.println(userAuth.toString());
             userAuth.setEnabled(enabled);
             userAuthRepository.save(userAuth);
             userAuthRepository.flush();
@@ -52,5 +48,10 @@ public class UserDaoImpl implements UserDao {
             return MsgUtil.makeMsg(MsgUtil.SUCCESS, msg);
         }
         else return null;
+    }
+
+    @Override
+    public UserAuth checkUsernameExist(String username) {
+        return userAuthRepository.findUserAuthByUsername(username);
     }
 }

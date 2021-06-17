@@ -5,6 +5,7 @@ import com.reins.bookstore.entity.User;
 import com.reins.bookstore.entity.UserAuth;
 import com.reins.bookstore.service.UserService;
 import com.reins.bookstore.utils.msgutils.Msg;
+import com.reins.bookstore.utils.msgutils.MsgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,9 +42,19 @@ public class UserController {
         return null;
     }
 
-    @RequestMapping("changeUserAuthEnabled")
+    @RequestMapping("/changeUserAuthEnabled")
     public Msg changeUserAuthEnabled(@RequestParam("userId") Integer userId, @RequestParam("enabled") Integer enabled ){
         return userService.changeUserAuthEnabled(userId, enabled);
     }
 
+    @RequestMapping("/checkUsernameExist")
+    public Msg checkUsernameExist(@RequestParam("username") String username){
+        UserAuth userAuth = userService.checkUsernameExist(username);
+        if(userAuth != null){
+            String msg = "用户名已存在！";
+            return MsgUtil.makeMsg(MsgUtil.ERROR, msg);
+        }else{
+            return MsgUtil.makeMsg(MsgUtil.SUCCESS, "👌");
+        }
+    }
 }
