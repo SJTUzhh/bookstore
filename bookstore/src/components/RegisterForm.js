@@ -6,9 +6,8 @@ import { checkUsernameExist } from '../services/userService'
 
 
 class RegisterForm extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state = {usernameUnique: false};
     }
 
     checkPasswordConsistent = (rule, value, callback) => {
@@ -22,20 +21,16 @@ class RegisterForm extends React.Component {
 
     checkUsernameUnique = (rule, value, callback) => {
         console.log(value);
-        if(this.state.usernameUnique){
-            callback();
-        } else {
-            callback("Username already exists!");
-        }      
-    }
-
-    // username <Input/> onBlur
-    setUsernameUnique = () => {
-        const username = this.props.form.getFieldValue('username')
-        const callback = (data) => {
-            this.setState({ usernameUnique: data.status >= 0 ? true : false})
+        const requestCallback = (data) => {
+            if(data.status >= 0 && data.msg == ""){
+                callback();
+            } else if (data.status < 0 && data.msg == "Username already exists!"){
+                callback(data.msg);
+            } else {
+                callback(data.msg);
+            }
         }
-        checkUsernameExist(username, callback);
+        checkUsernameExist(value, requestCallback);
     }
 
     handleSubmit = e => {
@@ -57,11 +52,11 @@ class RegisterForm extends React.Component {
                         rules: [
                             { required: true, message: 'Please input your username!' },
                             { validator: this.checkUsernameUnique }],
+                        validateTrigger: 'onBlur',
                     })(
                         <Input
                             prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                            placeholder="Username"
-                            onBlur={this.setUsernameUnique}
+                            placeholder="Username"                            
                         />,
                     )}
                 </Form.Item>
@@ -84,6 +79,7 @@ class RegisterForm extends React.Component {
                                 validator: this.checkPasswordConsistent
                             },
                         ],
+                        validateTrigger: 'onBlur',
                     })(
                         <Input.Password
                             prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}

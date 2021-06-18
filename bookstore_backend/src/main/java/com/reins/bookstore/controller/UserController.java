@@ -51,10 +51,10 @@ public class UserController {
     public Msg checkUsernameExist(@RequestParam("username") String username){
         UserAuth userAuth = userService.checkUsernameExist(username);
         if(userAuth != null){
-            String msg = "用户名已存在！";
+            String msg = "Username already exists!";
             return MsgUtil.makeMsg(MsgUtil.ERROR, msg);
         }else{
-            return MsgUtil.makeMsg(MsgUtil.SUCCESS, "👌");
+            return MsgUtil.makeMsg(MsgUtil.SUCCESS, "");
         }
     }
 }
