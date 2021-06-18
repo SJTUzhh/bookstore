@@ -18,7 +18,7 @@ export default class AdminRoute extends React.Component{
         if (data.status >= 0) {
             //检查是否是管理员
             let userType = JSON.parse(localStorage.getItem("user")).userType;
-            if (userType == adminTypeValue) {
+            if (userType === adminTypeValue) {
                 this.setState({ isAuthed: true, hasAuthed: true, isAdmin: true })
             } else {
                 this.setState({ isAuthed: true, hasAuthed: true, isAdmin: false })

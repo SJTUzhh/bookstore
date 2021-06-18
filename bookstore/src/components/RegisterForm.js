@@ -1,8 +1,8 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 import 'antd/dist/antd.css';
 import '../css/login.css'
-import { checkUsernameExist } from '../services/userService'
+import { checkUsernameExist, addNewUser } from '../services/userService'
 
 
 class RegisterForm extends React.Component {
@@ -22,9 +22,9 @@ class RegisterForm extends React.Component {
     checkUsernameUnique = (rule, value, callback) => {
         console.log(value);
         const requestCallback = (data) => {
-            if(data.status >= 0 && data.msg == ""){
+            if(data.status >= 0 && data.msg === ""){
                 callback();
-            } else if (data.status < 0 && data.msg == "Username already exists!"){
+            } else if (data.status < 0 && data.msg === "Username already exists!"){
                 callback(data.msg);
             } else {
                 callback(data.msg);
@@ -36,9 +36,16 @@ class RegisterForm extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
+            const callback = (data) => {
+                if(data.status >= 0){
+                    message.success("注册成功！")
+                }else{
+                    message.error("注册失败！")
+                }
+            }
             if (!err) {
                 console.log('Received values of form: ', values);
-                //userService.login(values);
+                addNewUser(values, callback);
             }
         });
     };

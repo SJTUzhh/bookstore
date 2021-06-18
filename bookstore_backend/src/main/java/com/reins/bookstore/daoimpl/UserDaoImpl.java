@@ -1,6 +1,7 @@
 package com.reins.bookstore.daoimpl;
 
 import com.reins.bookstore.dao.UserDao;
+import com.reins.bookstore.entity.User;
 import com.reins.bookstore.entity.UserAuth;
 import com.reins.bookstore.repository.UserAuthRepository;
 import com.reins.bookstore.repository.UserRepository;
@@ -53,5 +54,23 @@ public class UserDaoImpl implements UserDao {
     @Override
     public UserAuth checkUsernameExist(String username) {
         return userAuthRepository.findUserAuthByUsername(username);
+    }
+
+    @Override
+    public Msg addNewUser(String name, String password, String email) {
+        UserAuth userAuth = new UserAuth();
+        userAuth.setPassword(password);
+        userAuth.setUsername(name);
+        userAuth.setUserType(1);
+        userAuth.setEnabled(1);
+
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+
+        userAuthRepository.saveAndFlush(userAuth);
+        userRepository.saveAndFlush(user);
+
+        return MsgUtil.makeMsg(MsgUtil.SUCCESS, "注册成功");
     }
 }

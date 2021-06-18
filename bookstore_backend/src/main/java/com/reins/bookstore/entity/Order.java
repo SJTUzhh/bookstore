@@ -2,9 +2,7 @@ package com.reins.bookstore.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
@@ -13,6 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "`order`")
 public class Order {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private LocalDateTime datetime;
     private int userId;

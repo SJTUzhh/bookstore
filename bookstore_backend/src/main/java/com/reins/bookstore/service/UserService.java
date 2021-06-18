@@ -13,4 +13,6 @@ public interface UserService {
     Msg changeUserAuthEnabled(Integer userId, Integer enabled);
 
     UserAuth checkUsernameExist(String username);
+
+    Msg addNewUser(String name, String password, String email);
 }

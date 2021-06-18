@@ -57,4 +57,12 @@ public class UserController {
             return MsgUtil.makeMsg(MsgUtil.SUCCESS, "");
         }
     }
+
+    @RequestMapping("/addNewUser")
+    public Msg addNewUser(@RequestParam("username") String name, @RequestParam("password") String password, @RequestParam("email") String email){
+        System.out.println("Add new user is called here!");
+        return userService.addNewUser(name, password, email);
+    }
+
+
 }

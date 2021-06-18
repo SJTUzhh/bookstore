@@ -61,3 +61,8 @@ export const checkUsernameExist = (username, callback) => {
     const url = `${config.apiUrl}/checkUsernameExist`;
     postRequest_v2(url, data, callback);
 }
+
+export const addNewUser = (data, callback) => {
+    const url = `${config.apiUrl}/addNewUser`;
+    postRequest_v2(url, data, callback);
+}

@@ -20,6 +20,7 @@ import javax.persistence.*;
 public class UserAuth {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
     private String username;
 
