@@ -18,7 +18,7 @@ public class UserAuthTest {
 
     @Test
     public void checkUserAuthAdd(){
-        UserAuth userAuth = new UserAuth("test", "test", 1, 1);
+        UserAuth userAuth = new UserAuth("zhanghong", "zhanghong", 0, 1);
         User user = new User();
 
         user.setUserAuth(userAuth);
