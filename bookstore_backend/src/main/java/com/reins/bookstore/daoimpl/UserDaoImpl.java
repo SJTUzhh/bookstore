@@ -29,7 +29,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public UserAuth checkUser(String username, String password){
-
         return userAuthRepository.checkUser(username,password);
     }
 

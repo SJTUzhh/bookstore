@@ -8,6 +8,7 @@ import com.reins.bookstore.utils.msgutils.MsgCode;
 import com.reins.bookstore.utils.msgutils.MsgUtil;
 import com.reins.bookstore.utils.sessionutils.SessionUtil;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,9 +55,13 @@ public class LoginController {
                 obj.put(Constant.USER_TYPE, auth.getUserType());
                 SessionUtil.setSession(obj);
 
-                JSONObject data = JSONObject.fromObject(auth);
-                data.remove(Constant.PASSWORD);
+                //使用config过滤，防止调用JSONObject.fromObject时user和userAuth的循环引用
+                JsonConfig config = new JsonConfig();
+                config.setExcludes(new String[]{"user"});
+                JSONObject data = JSONObject.fromObject(auth, config);
+                System.out.println("data: " + data);
 
+                data.remove(Constant.PASSWORD);
                 return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.LOGIN_SUCCESS_MSG, data);
             }else{
                 return MsgUtil.makeMsg(MsgCode.LOGIN_USER_ERROR, MsgUtil.USER_DISABLED_MSG);

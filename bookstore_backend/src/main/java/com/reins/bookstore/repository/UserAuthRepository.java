@@ -14,7 +14,6 @@ public interface UserAuthRepository extends JpaRepository<UserAuth, Integer>{
     UserAuth checkUser(@Param("username") String username, @Param("password") String password);
 
     /**
-     *
      * @return UserAuth(whose "user_type" > 0), with no "password" and "userType" returned
      */
     @Query("select new UserAuth(ua.userId, ua.name, ua.enabled) from UserAuth ua where ua.userType > 0")

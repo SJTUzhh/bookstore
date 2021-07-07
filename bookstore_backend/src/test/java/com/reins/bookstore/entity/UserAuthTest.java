@@ -1,5 +1,7 @@
 package com.reins.bookstore.entity;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reins.bookstore.repository.UserAuthRepository;
 import com.reins.bookstore.repository.UserRepository;
 import org.junit.Test;
@@ -25,6 +27,17 @@ public class UserAuthTest {
         userAuth.setUser(user);
 
         userAuthRepository.saveAndFlush(userAuth);
+    }
+
+    @Test
+    public void checkUserAuth2JsonObject() throws JsonProcessingException {
+        UserAuth userAuth = new UserAuth("zhanghong", "zhanghong", 0, 1);
+        User user = new User();
+        user.setUserAuth(userAuth);
+        userAuth.setUser(user);
+
+        String result = new ObjectMapper().writeValueAsString(user);
+        System.out.println(result);
     }
 
 

@@ -1,6 +1,7 @@
 package com.reins.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
@@ -15,7 +16,9 @@ import javax.persistence.*;
  */
 
 @Entity
-@Data // 新加的字段要写getter和setter或者在类前面注解一个@Data，不然不会和数据库的字段关联起来
+//@Data: 一对一双向映射中（User和UserAuth），必须有一个不能用@Data，因为必须有一个不能重写toString
+//否则会堆栈溢出，User和UserAuth反复调用hashcode
+//跟JSONObject.fromObject调用toString有关
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userId")
 public class UserAuth {
@@ -48,50 +51,54 @@ public class UserAuth {
         this.enabled = enabled;
     }
 
-    public String toString(){
-        return "UserAuth: userId=" + userId + ", username=" + name + ", userType=" + userType +
-                ", enabled=" + enabled + "\n";
+    /* getters and setters */
+
+    public Integer getUserId() {
+        return userId;
     }
 
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
-//    public Integer getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(Integer userId) {
-//        this.userId = userId;
-//    }
-//
-//    public String getUsername() {
-//        return username;
-//    }
-//
-//    public void setUsername(String username) {
-//        this.username = username;
-//    }
-//
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
-//
-//    public Integer getUserType() {
-//        return userType;
-//    }
-//
-//    public void setUserType(Integer userType) {
-//        this.userType = userType;
-//    }
-//
-//    public Integer getEnabled() {
-//        return enabled;
-//    }
-//
-//    public void setEnabled(Integer enabled) {
-//        this.enabled = enabled;
-//    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String username) {
+        this.name = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
 
 }
