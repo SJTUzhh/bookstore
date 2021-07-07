@@ -15,17 +15,26 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-@Table(name = "user")
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userId")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
     private String email;
     private String name;
     private String tel;
     private String address;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    @JoinColumn(name = "user_id")
+    UserAuth userAuth;
+
     public User(){}
+
+    public User(String name, String email){
+        this.name = name;
+        this.email = email;
+    }
 }

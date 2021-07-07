@@ -53,24 +53,18 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public UserAuth checkUsernameExist(String username) {
-        return userAuthRepository.findUserAuthByUsername(username);
+        return userAuthRepository.findUserAuthByName(username);
     }
 
     @Override
     public Msg addNewUser(String name, String password, String email) {
-        UserAuth userAuth = new UserAuth();
-        userAuth.setPassword(password);
-        userAuth.setUsername(name);
-        userAuth.setUserType(1);
-        userAuth.setEnabled(1);
+        UserAuth userAuth = new UserAuth(name, password, 1, 1);
+        User user = new User(name, email);
 
-        User user = new User();
-        user.setName(name);
-        user.setEmail(email);
+        userAuth.setUser(user);
+        user.setUserAuth(userAuth);
 
         userAuthRepository.saveAndFlush(userAuth);
-        userRepository.saveAndFlush(user);
-
         return MsgUtil.makeMsg(MsgUtil.SUCCESS, "注册成功");
     }
 }

@@ -50,7 +50,7 @@ public class LoginController {
             if(auth.getEnabled() != Constant.DISABLED){
                 JSONObject obj = new JSONObject();
                 obj.put(Constant.USER_ID, auth.getUserId());
-                obj.put(Constant.USERNAME, auth.getUsername());
+                obj.put(Constant.USERNAME, auth.getName());
                 obj.put(Constant.USER_TYPE, auth.getUserType());
                 SessionUtil.setSession(obj);
 
