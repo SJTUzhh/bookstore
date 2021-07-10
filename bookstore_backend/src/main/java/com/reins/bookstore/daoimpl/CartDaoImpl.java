@@ -27,10 +27,13 @@ public class CartDaoImpl implements CartDao {
     public Cart addBook2Cart(Integer userId, Integer bookId, Integer addCount){
         Cart cart;
         boolean exists = cartRepository.existsById(new CartPK(userId, bookId));
+        //TODO: 目前还没有一次减超过1的case，所以暂时不用检查减少到小于0的情况
         if(exists){
             cart = cartRepository.getOne(new CartPK(userId, bookId));
             cart.setCount(cart.getCount() + addCount);
         } else{
+            //存在减的case，特殊处理
+            addCount = addCount > 0 ? addCount : 0;
             cart  = new Cart(userId, bookId, addCount);
         }
         cartRepository.saveAndFlush(cart);
@@ -58,6 +61,12 @@ public class CartDaoImpl implements CartDao {
             cartInfos.get(i).put("shelve", booksInCart.get(i).getShelve());
         }
         return cartInfos;
+    }
+
+    @Override
+    public Cart deleteBookFromCart(Integer userId, Integer bookId) {
+        cartRepository.deleteById(new CartPK(userId, bookId));
+        return new Cart(userId, bookId, 0);
     }
 
 }

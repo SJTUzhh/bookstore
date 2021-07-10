@@ -7,6 +7,13 @@ export const addBook2Cart = (userId, bookId, addCount, callback) => {
     postRequest_v2(url, data, callback)
 }
 
+export const deleteBookFromCart = (userId, bookId, callback) => {
+    const url = `${config.apiUrl}/deleteBookFromCart`;
+    const data = {userId: userId, bookId: bookId};
+    postRequest_v2(url, data, callback)
+}
+
+
 export const getCartByUserId = (userId, callback) => {
     const url = `${config.apiUrl}/getCartByUserId`;
     const data = {userId: userId};

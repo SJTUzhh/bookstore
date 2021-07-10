@@ -25,4 +25,9 @@ public class CartServiceImpl implements CartService {
     public List<JSONObject> getCartByUserId(Integer userId){
         return cartDao.getCartByUserId(userId);
     }
+
+    @Override
+    public Cart deleteBookFromCart(Integer userId, Integer bookId) {
+        return cartDao.deleteBookFromCart(userId, bookId);
+    }
 }

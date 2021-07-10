@@ -24,13 +24,15 @@ public class CartController {
      */
     @RequestMapping("/addBook2Cart")
     public Cart addBook2Cart(@RequestParam("userId") Integer userId, @RequestParam("bookId") Integer bookId, @RequestParam("addCount") Integer addCount){
-        System.out.println("addBook2Cart: userId: " + userId);
-        System.out.println("addBook2Cart: bookId: " + bookId);
         return cartService.addBook2Cart(userId, bookId, addCount);
     }
     @RequestMapping("/getCartByUserId")
     public List<JSONObject> getCartByUserId(@RequestParam("userId") Integer userId){
-        System.out.println("getCartByUserId: " + userId);
         return cartService.getCartByUserId(userId);
+    }
+
+    @RequestMapping("/deleteBookFromCart")
+    public Cart deleteBookFromCart(@RequestParam("userId") Integer userId, @RequestParam("bookId") Integer bookId){
+        return cartService.deleteBookFromCart(userId, bookId);
     }
 }

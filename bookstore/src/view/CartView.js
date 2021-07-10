@@ -1,101 +1,125 @@
 import React from 'react';
-import { Table, Button, Layout } from 'antd'
+import { Table, Button, Layout, Checkbox} from 'antd'
 import { HeaderInfo } from "../components/HeaderInfo";
 import { SideBar } from "../components/SideBar";
 import { withRouter } from "react-router-dom";
-import { getCartByUserId } from "../services/cartService";
+import { getCartByUserId, addBook2Cart, deleteBookFromCart } from "../services/cartService";
 import 'antd/dist/antd.css';
 import '../css/bookDetail.css'
 
 const { ButtonGroup } = Button.Group;
 const { Header, Content, Footer } = Layout;
 
-//TODO: 可重构代码，将const都写入一个const文件里去
-const columns = [
-    {
-        title: '书名',
-        dataIndex: 'bookName',
-        key: 'bookName',
-        render: text => <a>{text}</a>,
-    },
-    // {
-    //     title: 'bookId',
-    //     dataIndex: 'bookId',
-    //     key: 'bookId',
-    // },
-    {
-        title: '价格',
-        dataIndex: 'price',
-        key: 'price',
-    },
-    {
-        title: '数量',
-        key: 'count',
-        dataIndex: 'count',
-    },
-    {
-        title: '是否上架',
-        key: 'shelve',
-        dataIndex: 'shelve',
-    },
-    {
-        title: '操作',
-        key: 'action',
-        render: (text, record) => (
-            <div>
-                <ButtonGroup size="middle">
-                    <Button type="default" icon="plus-circle"></Button>
-                    <Button type="default" icon="minus-circle" size={"small"}></Button>
-                    <Button type="danger" icon="pay-circle" size={"small"}>结算</Button>
-                </ButtonGroup>
-            </div>
-
-        ),
-    },
-];
-
-
-const dataSource = [
-    {
-        bookId: 1, 
-        count: 23, 
-        bookName: "Java核心技术卷II", 
-        price: 95.2, 
-        shelve: true
-    },
-    {
-        bookId: 1, 
-        count: 23, 
-        bookName: "Java核心技术卷II", 
-        price: 95.2, 
-        shelve: true
-    },
-    {
-        bookId: 1, 
-        count: 23, 
-        bookName: "Java核心技术卷II", 
-        price: 95.2, 
-        shelve: true
-    },
-];
-
 class CartView extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { cartInfos: []};
+        this.columns = [
+            {
+                title: 'bookName',
+                dataIndex: 'bookName',
+                key: 'bookName',
+                render: text => <a>{text}</a>,
+            },
+            {
+                title: 'price',
+                dataIndex: 'price',
+                key: 'price',
+            },
+            {
+                title: 'count',
+                key: 'count',
+                dataIndex: 'count',
+                render: (text, record, index) => {
+                    return (<span>                        
+                        <Button icon="minus" size="small" onClick={(e) => this.decreaseCount(text, record.bookId, index)}></Button>
+                        <Button size="small">{text}</Button>
+                        <Button icon="plus" size="small" onClick={(e) => this.increaseCount(text, record.bookId, index)}></Button>
+                    </span>)
+                }
+            },
+            {
+                title: 'select',
+                key: 'select',
+                dataIndex: 'select',
+                render: (text, record, index) => (<span>
+                    <Checkbox onChange={(e) => { this.onCheckboxChange(e, index) }}></Checkbox>
+                </span>)
+            },
+            {
+                title: 'delete',
+                key: 'delete',
+                dataIndex: 'delete',
+                render: (text, record, index) => (<span>
+                    <Button type="primary" icon="delete" onClick={(e) => this.deleteCartItem(record.bookId)}>删除</Button>
+                </span>)
+            },        
+        ];
+
+        this.userId = JSON.parse(localStorage.getItem('user')).userId
+
+        this.state = { cartInfos: [], seletedBooks: [] };
     }
-    
+
     componentDidMount() {
         let userId = JSON.parse(localStorage.getItem("user")).userId;
         getCartByUserId(userId, (data) => {
             this.setState({ cartInfos: data })
-        })     
+        })
+    }
+
+    onCheckboxChange = (e, index) => {
+        const seletedBooks = this.state.seletedBooks;
+        if (e.target.checked) {
+            this.setState({
+                seletedBooks: [...seletedBooks, index]
+            });
+        } else {
+            this.setState({
+                seletedBooks: seletedBooks.filter(i => i !== index)
+            })
+        }
+    }
+
+    increaseCount = (text, bookId, index) => {
+        addBook2Cart(this.userId, bookId, 1, () => {
+            // //更新本地{cartInfos}
+            // let newCartInfos = this.state.cartInfos
+            // newCartInfos[index].count = newCartInfos[index].count + 1;
+            // this.setState({
+            //     cartInfos: newCartInfos
+            // })
+            getCartByUserId(this.userId, (data) => {
+                this.setState({ cartInfos: data })
+            })
+        })
+    }
+
+    decreaseCount = (text, bookId, index) => {
+        if(text == '1') return
+        addBook2Cart(this.userId, bookId, -1, () => {
+            // //更新本地{cartInfos}
+            // let newCartInfos = this.state.cartInfos
+            // newCartInfos[index].count = newCartInfos[index].count + 1;
+            // this.setState({
+            //     cartInfos: newCartInfos
+            // })
+            getCartByUserId(this.userId, (data) => {
+                this.setState({ cartInfos: data })
+            })
+        })
+    }
+
+    deleteCartItem = (bookId) => {
+        deleteBookFromCart(this.userId, bookId, () => {
+            getCartByUserId(this.userId, (data) => {
+                this.setState({ cartInfos: data })
+            })
+        })
     }
 
     //TODO: 后续可重构代码，将Table写到一个CartList组件里
     render() {
-        console.log(this.state.cartInfos)
         return (
             <Layout className="layout">
                 <Header>
@@ -105,12 +129,11 @@ class CartView extends React.Component {
                     <SideBar />
                     <Content style={{ padding: '0 50px' }}>
                         <div className="home-content">
-                            {/* <p>购物车列表</p> */}
-                            <Table columns={columns} dataSource={dataSource} />
+                            <Table columns={this.columns} dataSource={this.state.cartInfos} />
                             <Button type="danger" icon="pay-circle" size={"large"}
                                 style={{ float: 'right', marginRight: '1%' }}>
                                 全部结算
-                    </Button>
+                            </Button>
                             <div className={"foot-wrapper"}>
                             </div>
                         </div>
@@ -122,30 +145,3 @@ class CartView extends React.Component {
 }
 
 export default withRouter(CartView);
-
-
-// if (this.state.carts.length != 0) {
-//     //TODO:有优化的空间：只request一次获取Book数组
-//     for (let i=this.state.carts.length-1; i<this.state.carts.length; i++) {
-//         let cart = this.state.carts[i]
-//         let bookId = cart.bookId;
-//         let bookCount = cart.count;
-//         getBook(bookId, (data) => {
-//             let name = data.name;
-//             let isbn = data.isbn;
-//             let price = data.price;
-//             let newShowDataItem = {
-//                 name: name,
-//                 isbn: isbn,
-//                 bookId: bookId,
-//                 price: price,
-//                 count: bookCount
-//             };   
-//             this.setState({showData: newShowDataItem})     
-//             //showData.push(newShowDataItem);       
-//             // this.setState(prevState => ({
-//             //     showData: [...prevState.showData, newShowDataItem]}))
-//             //this.setState({showData: this.state.showData.concat([newShowDataItem])});                         
-//         })
-//     }
-// }

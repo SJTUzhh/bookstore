@@ -29,7 +29,7 @@ export class BookDetail extends React.Component {
     add2Cart(userId, bookId, addCount) {
         console.log("Adding " + bookId + " to " + userId + "'s Cart: " + addCount);
         addBook2Cart(userId, bookId, addCount, this.checkAddResult)
-        this.setState({modalVisible: false, addCount: 1})
+        this.setState({modalVisible: false})
     }
 
     //TODO: 需要检查传回的userId和bookId是否和我们传过去的相等
