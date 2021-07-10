@@ -3,6 +3,7 @@ package com.reins.bookstore.controller;
 import com.reins.bookstore.entity.Cart;
 import com.reins.bookstore.entity.compositePK.CartPK;
 import com.reins.bookstore.service.CartService;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,14 +23,14 @@ public class CartController {
      * @return bookId
      */
     @RequestMapping("/addBook2Cart")
-    public CartPK addBook2Cart(@RequestParam("userId") Integer userId, @RequestParam("bookId") Integer bookId){
+    public Cart addBook2Cart(@RequestParam("userId") Integer userId, @RequestParam("bookId") Integer bookId, @RequestParam("addCount") Integer addCount){
         System.out.println("addBook2Cart: userId: " + userId);
         System.out.println("addBook2Cart: bookId: " + bookId);
-        return cartService.addBook2Cart(userId, bookId);
+        return cartService.addBook2Cart(userId, bookId, addCount);
     }
-    @RequestMapping("/getCartsByUserId")
-    public List<Cart> getCartsByUserId(@RequestParam("userId") Integer userId){
-        System.out.println("getCartsByUserId: " + userId);
-        return cartService.getCartsByUserId(userId);
+    @RequestMapping("/getCartByUserId")
+    public List<JSONObject> getCartByUserId(@RequestParam("userId") Integer userId){
+        System.out.println("getCartByUserId: " + userId);
+        return cartService.getCartByUserId(userId);
     }
 }

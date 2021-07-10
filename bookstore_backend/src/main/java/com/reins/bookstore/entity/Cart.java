@@ -10,15 +10,12 @@ import javax.persistence.*;
 @Data
 @Entity
 @IdClass(CartPK.class)
-@Table(name = "cart")
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
 public class Cart {
 
     @Id
-    @Column(name = "user_id")
     private int userId;
     @Id
-    @Column(name = "book_id")
     private int bookId;
     private int count;
 

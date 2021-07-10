@@ -4,8 +4,6 @@ import {HeaderInfo} from "../components/HeaderInfo";
 import {SideBar} from "../components/SideBar";
 import '../css/bookDetail.css'
 import {withRouter} from "react-router-dom";
-
-
 import {getBook} from "../services/bookService";
 import {BookDetail} from "../components/BookDetail";
 

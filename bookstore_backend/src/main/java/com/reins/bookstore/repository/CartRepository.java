@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface CartRepository extends JpaRepository<Cart, CartPK> {
     @Query("select c from Cart c where c.userId = ?1")
-    List<Cart> findDistinctByUserIdIgnoreCase(Integer userId);
+    List<Cart> findByUserId(Integer userId);
 }

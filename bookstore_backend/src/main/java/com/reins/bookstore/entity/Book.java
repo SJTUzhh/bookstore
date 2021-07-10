@@ -17,9 +17,8 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-@Table(name = "book")
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "bookId")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "bookId")
 public class Book {
 
     @Id
@@ -33,24 +32,10 @@ public class Book {
     private String author;
     private Double price;
     private String description;
-    private Integer inventory;
+    private Integer inventory = 0;
     private String image;
+    private Boolean shelve = true; //是否上架
 
-    public Book(){
-        this.isbn = "0";
-        this.name = "default";
-        this.author = "default";
-        this.image = "default";
-        this.inventory = 0;
-    }
-
-//    public Book(Integer bookId, String isbn, String name, String author, String image, Integer inventory){
-//        this.bookId = bookId;
-//        this.isbn = isbn;
-//        this.name = name;
-//        this.author = author;
-//        this.image = image;
-//        this.inventory = inventory;
-//    }
+    public Book(){}
 
 }
