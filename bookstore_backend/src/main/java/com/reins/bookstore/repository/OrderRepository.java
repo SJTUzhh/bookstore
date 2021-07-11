@@ -9,4 +9,8 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findOrdersByDatetimeAfterAndDatetimeBefore(LocalDateTime begin, LocalDateTime end);
+
+    List<Order> findOrdersByUserIdAndDatetimeAfterAndDatetimeBefore(Integer userId, LocalDateTime begin, LocalDateTime end);
+
+    List<Order> findOrdersByUserId(Integer userId);
 }

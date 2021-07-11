@@ -35,7 +35,7 @@ class HomeView extends React.Component{
                         <div className="home-content">
                             <SearchBar />
 
-                            <BookCarousel />
+                            {/* <BookCarousel /> */}
                             <BookList />
                             <div className={"foot-wrapper"}>
                             </div>

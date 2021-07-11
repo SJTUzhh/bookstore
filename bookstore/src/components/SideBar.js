@@ -27,6 +27,14 @@ export class SideBar extends React.Component {
         history.push("/cart");     
     };
 
+    orderOnClick = () => {
+        history.push("/order");
+    }
+
+    profileOnClick = () => {
+        history.push("/profile");
+    }
+
     render() {
         return (
             <div style={{width:this.state.collapsed? "80px":"180px", maxWidth:this.state.collapsed? "80px":"180px", minWidth:this.state.collapsed? "80px":"180px" }}>
@@ -35,19 +43,19 @@ export class SideBar extends React.Component {
                 <Menu defaultSelectedKeys={['1']} mode="inline">
                     <Menu.Item key="1" onClick={this.bookOnClick}>
                         <Icon type="read" style={{ fontSize: '18px'}}/>
-                        <span style={{ fontSize: '16px'}}>Books</span>
+                        <span style={{ fontSize: '16px'}}>书籍浏览</span>
                     </Menu.Item>
                     <Menu.Item key="2" onClick={this.cartOnClick}>
                         <Icon type="shopping-cart" style={{ fontSize: '18px'}} />
-                        <span style={{ fontSize: '16px'}}>My Cart</span>
+                        <span style={{ fontSize: '16px'}}>购物车</span>
                     </Menu.Item>
-                    <Menu.Item key="3">
+                    <Menu.Item key="3" onClick={this.orderOnClick}>
                         <Icon type="solution"  style={{ fontSize: '18px'}}/>
-                        <span style={{ fontSize: '16px'}}>My Orders</span>
+                        <span style={{ fontSize: '16px'}}>订单信息</span>
                     </Menu.Item>
-                    <Menu.Item key="4">
+                    <Menu.Item key="4" onClick={this.profileOnClick}>
                         <Icon type="user" style={{ fontSize: '18px'}}/>
-                        <span style={{ fontSize: '16px'}}>My Profile</span>
+                        <span style={{ fontSize: '16px'}}>个人信息</span>
                     </Menu.Item>
                 </Menu>
             </Sider>

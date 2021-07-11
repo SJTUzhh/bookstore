@@ -20,8 +20,24 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> getOrdersByUserId(Integer userId, Long beginTimestamp, Long endTimestamp) {
+        return orderDao.getOrdersByUserId(userId, beginTimestamp, endTimestamp);
+    }
+
+    @Override
     public List<OrderItem> getOrderItems(){
         return orderDao.getOrderItems();
     }
+
+    @Override
+    public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
+        return orderDao.getOrderItemsByOrderId(orderId);
+    }
+
+    @Override
+    public List<OrderItem> getOrderItemsByOrderIds(List<Integer> orderIds) {
+        return orderDao.getOrderItemsByOrderIds(orderIds);
+    }
+
 
 }

@@ -7,6 +7,8 @@ import HomeView from "./view/HomeView";
 import LoginView from './view/LoginView'
 import BookView from "./view/BookView";
 import CartView from "./view/CartView";
+import OrderView from "./view/OrderView";
+import ProfileView from "./view/ProfileView";
 import AdminHomeView from "./view/AdminHomeView"
 import AdminUserView from "./view/AdminUserView"
 import AdminBookView from "./view/AdminBookView"
@@ -36,6 +38,8 @@ class BasicRoute extends React.Component{
                     <Route exact path="/register" component={LoginView} />
                     <PrivateRoute exact path="/bookDetails" component={BookView} />
                     <PrivateRoute exact path="/cart" component={CartView} />
+                    <PrivateRoute exact path="/order" component={OrderView} />
+                    <PrivateRoute exact path="/profile" component={ProfileView} />
 
                     <AdminRoute exact path="/admin" component={AdminHomeView} />
                     <AdminRoute exact path="/admin/user" component={AdminUserView} />

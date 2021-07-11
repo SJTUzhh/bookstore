@@ -47,15 +47,9 @@ public class OrderTest {
         orderItem5.setOrder(order2);
         orderItem6.setOrder(order2);
 
+        //会级联保存关联的所有orderItem，并且orderItem的orderId为Order的id
         orderRepository.saveAndFlush(order1);
         orderRepository.saveAndFlush(order2);
-
-//        orderItemRepository.saveAndFlush(orderItem1);
-//        orderItemRepository.saveAndFlush(orderItem2);
-//        orderItemRepository.saveAndFlush(orderItem3);
-//        orderItemRepository.saveAndFlush(orderItem4);
-//        orderItemRepository.saveAndFlush(orderItem5);
-//        orderItemRepository.saveAndFlush(orderItem6);
 
     }
 

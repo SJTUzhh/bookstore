@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Button } from 'antd';
-import { getOrderInfos } from '../services/orderService';
+import { adminGetOrderInfos } from '../services/orderService';
 import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
 
 export class AdminStatConsumer extends React.Component {
@@ -52,7 +52,7 @@ export class AdminStatConsumer extends React.Component {
         const beginTimestamp = datetimeRange == null ? 0.0 : datetimeRange[0].getTime();
         const endTimestamp = datetimeRange == null ? 0.0 : datetimeRange[1].getTime();
 
-        getOrderInfos({ "beginTimestamp": beginTimestamp, "endTimestamp": endTimestamp }, callback);
+        adminGetOrderInfos({ "beginTimestamp": beginTimestamp, "endTimestamp": endTimestamp }, callback);
     }
 
     getConsumerData = (data) => {

@@ -1,44 +1,54 @@
 import React from 'react';
 import { Table, Button } from 'antd';
-import { adminGetOrderInfos } from '../services/orderService';
+import { customerGetOrderInfos } from '../services/orderService';
 import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
 
-export class AdminStatBookSell extends React.Component {
+export class OrderTable extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.columns = [
             {
-                title: 'Book Id',
-                dataIndex: 'bookId',
-                key: 'bookId',
+                title: '日期',
+                dataIndex: 'datetime',
+                key: 'datetime',
+                render: text => {
+                    return text.replace("T", "  ")
+                },
+                sorter: (a, b) => (a.datetime > b.datetime)
             },
             {
-                title: 'Title',
+                title: '书名',
                 dataIndex: 'bookname',
                 key: 'bookname',
-                render: text => <a>{text}</a>
             },
             {
-                title: 'Total Sell',
+                title: '数目',
                 dataIndex: 'count',
                 key: 'count',
-                defaultSortOrder: 'descend',
-                sorter: (a, b) => (a.count - b.count)
             },
+            {
+                title: '费用',
+                dataIndex: 'cost',
+                key: 'cost',
+                render: (text) => {
+                    return text.toFixed(2)
+                }
+            },
+
         ];
 
+        this.userId = JSON.parse(localStorage.getItem('user')).userId;
+
         this.state = {
-            datetimeRange: [new Date(1609488000 * 1000), new Date()],
-            bookSellData: []
+            customerOrderInfos: [],
+            datetimeRange: [new Date(1609488000 * 1000), new Date()]
         };
     }
 
     componentDidMount() {
-
         this.handleFilterClick();
-
     }
 
     handlePickerChange = (value) => {
@@ -47,37 +57,13 @@ export class AdminStatBookSell extends React.Component {
 
     handleFilterClick = () => {
         const callback = (data) => {
-            this.getBookSellData(data);
+            this.setState({ customerOrderInfos: data });
         }
         const datetimeRange = this.state.datetimeRange;
         const beginTimestamp = datetimeRange == null ? 0.0 : datetimeRange[0].getTime();
         const endTimestamp = datetimeRange == null ? 0.0 : datetimeRange[1].getTime();
 
-        adminGetOrderInfos({ "beginTimestamp": beginTimestamp, "endTimestamp": endTimestamp }, callback);
-    }
-
-    getBookSellData = (data) => {
-        console.log(data[0], data.length);
-        let bookSellData = [];
-        for (let i = 0; i < data.length; i++) {
-            let bookId = data[i].bookId;
-            let existed = false;
-            for (let j = 0; j < bookSellData.length; j++) {
-                if (bookSellData[j].bookId == bookId) {
-                    bookSellData[j].count += data[i].count;
-                    existed = true;
-                    break;
-                }
-            }
-            if (!existed) {
-                bookSellData.push({
-                    bookId: data[i].bookId,
-                    bookname: data[i].bookname,
-                    count: data[i].count
-                })
-            }
-        }
-        this.setState({ bookSellData: bookSellData });
+        customerGetOrderInfos({ "userId": this.userId, "beginTimestamp": beginTimestamp, "endTimestamp": endTimestamp}, callback);      
     }
 
     render() {
@@ -101,7 +87,7 @@ export class AdminStatBookSell extends React.Component {
 
                 <br />
 
-                <Table columns={this.columns} dataSource={this.state.bookSellData} />
+                <Table columns={this.columns} dataSource={this.state.customerOrderInfos} />
             </div>);
     }
 

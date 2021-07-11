@@ -21,7 +21,7 @@ public class OrderDaoImpl implements OrderDao {
     OrderRepository orderRepository;
 
     @Autowired
-    OrderItemRepository OrderItemRepository;
+    OrderItemRepository orderItemRepository;
 
     @Autowired
     BookRepository bookRepository;
@@ -41,7 +41,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<OrderItem> getOrderItems(){
-        List<OrderItem> orderItems = OrderItemRepository.findAll();
+        List<OrderItem> orderItems = orderItemRepository.findAll();
 //        //fetch bookname and bookPrice
 //        for(OrderItem orderBook : orderBooks){
 //            Book book = bookRepository.getOne(orderBook.getBookId());
@@ -51,5 +51,28 @@ public class OrderDaoImpl implements OrderDao {
 //            orderBook.setBookPrice(bookPrice);
 //        }
         return orderItems;
+    }
+
+    @Override
+    public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
+        return orderItemRepository.findOrderItemsByOrderId(orderId);
+    }
+
+    @Override
+    public List<OrderItem> getOrderItemsByOrderIds(List<Integer> orderIds){
+        return orderItemRepository.findOrderItemsByOrderIds(orderIds);
+    }
+
+    @Override
+    public List<Order> getOrdersByUserId(Integer userId, Long beginTimestamp, Long endTimestamp) {
+        if(beginTimestamp == 0 || endTimestamp == 0){
+            // 必须两个都提供，否则不过滤
+            return orderRepository.findOrdersByUserId(userId);
+        }
+        else{
+            LocalDateTime begin = LocalDateTime.ofInstant(Instant.ofEpochMilli(beginTimestamp), TimeZone.getDefault().toZoneId());
+            LocalDateTime end = LocalDateTime.ofInstant(Instant.ofEpochMilli(endTimestamp), TimeZone.getDefault().toZoneId());
+            return orderRepository.findOrdersByUserIdAndDatetimeAfterAndDatetimeBefore(userId, begin, end);
+        }
     }
 }

@@ -9,12 +9,10 @@ import com.reins.bookstore.repository.BookRepository;
 import com.reins.bookstore.repository.CartRepository;
 import com.reins.bookstore.repository.OrderRepository;
 import net.sf.json.JSONObject;
-import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.reins.bookstore.entity.compositePK.CartPK;
 
-import javax.print.attribute.standard.JobSheets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
