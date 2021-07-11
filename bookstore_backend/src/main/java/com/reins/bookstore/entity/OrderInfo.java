@@ -17,14 +17,14 @@ public class OrderInfo {
 
     public OrderInfo() {}
 
-    public OrderInfo(Order order, OrderBook orderBook){
-        this.orderId = order.getId();
-        this.datetime = order.getDatetime();
-        this.userId = order.getUserId();
-        this.bookId = orderBook.getBookId();
-        this.bookname = orderBook.getBookname();
-        this.count = orderBook.getCount();
-        this.bookPrice = orderBook.getBookPrice();
-    }
+//    public OrderInfo(Order order, OrderBook orderBook){
+//        this.orderId = order.getId();
+//        this.datetime = order.getDatetime();
+//        this.userId = order.getUserId();
+//        this.bookId = orderBook.getBookId();
+//        this.bookname = orderBook.getBookname();
+//        this.count = orderBook.getCount();
+//        this.bookPrice = orderBook.getBookPrice();
+//    }
 
 }

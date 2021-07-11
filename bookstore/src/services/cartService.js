@@ -19,3 +19,9 @@ export const getCartByUserId = (userId, callback) => {
     const data = {userId: userId};
     postRequest_v2(url, data, callback)
 }
+
+export const payByCart = (userId, bookIds, callback) => {
+    const url = `${config.apiUrl}/payByCart`;
+    const data = {userId: userId, bookIds: bookIds};
+    postRequest_v2(url, data, callback)
+}

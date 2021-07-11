@@ -10,4 +10,6 @@ import java.util.List;
 public interface CartRepository extends JpaRepository<Cart, CartPK> {
     @Query("select c from Cart c where c.userId = ?1")
     List<Cart> findByUserId(Integer userId);
+
+    List<Cart> findAllByUserIdAndBookIdIn(Integer userId, List<Integer> bookIds);
 }

@@ -3,8 +3,11 @@ package com.reins.bookstore.daoimpl;
 import com.reins.bookstore.dao.CartDao;
 import com.reins.bookstore.entity.Book;
 import com.reins.bookstore.entity.Cart;
+import com.reins.bookstore.entity.Order;
+import com.reins.bookstore.entity.OrderItem;
 import com.reins.bookstore.repository.BookRepository;
 import com.reins.bookstore.repository.CartRepository;
+import com.reins.bookstore.repository.OrderRepository;
 import net.sf.json.JSONObject;
 import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.reins.bookstore.entity.compositePK.CartPK;
 
 import javax.print.attribute.standard.JobSheets;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +26,8 @@ public class CartDaoImpl implements CartDao {
     private CartRepository cartRepository;
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Override
     public Cart addBook2Cart(Integer userId, Integer bookId, Integer addCount){
@@ -67,6 +73,55 @@ public class CartDaoImpl implements CartDao {
     public Cart deleteBookFromCart(Integer userId, Integer bookId) {
         cartRepository.deleteById(new CartPK(userId, bookId));
         return new Cart(userId, bookId, 0);
+    }
+
+    @Override
+    public List<JSONObject> payByCart(Integer userId, List<Integer> bookIds) {
+        List<Book> books = bookRepository.findAllById(bookIds);
+        List<Cart> carts = cartRepository.findAllByUserIdAndBookIdIn(userId, bookIds);
+        List<JSONObject> payResults = new ArrayList<>();
+        Order order = new Order(LocalDateTime.now(), userId);
+
+        if(books.size() != carts.size())
+            System.out.println("---------------------------------wrong case----------------------");
+
+        for(int i = 0; i < books.size(); i++){
+            Book book = books.get(i);
+            Cart cart = carts.get(i);
+            JSONObject payResult = new JSONObject();
+            payResult.put("bookName", book.getName());
+            payResult.put("price", book.getPrice());
+            payResult.put("count", cart.getCount());
+            payResult.put("cost", book.getPrice() * cart.getCount());
+            payResult.put("inventory", book.getInventory());
+            payResult.put("shelve", book.getShelve());
+
+            int countInCart = cart.getCount();
+            int inventory = book.getInventory();
+            if(!book.getShelve()){
+                payResult.put("state", "fail");
+                payResult.put("message", "该书已下架");
+            }else if(countInCart > inventory){
+                payResult.put("state", "fail");
+                payResult.put("message", "库存不足，仅剩" + inventory + "件");
+            }else{
+                book.setInventory(inventory-countInCart);
+                bookRepository.saveAndFlush(book);
+                cartRepository.delete(cart);
+                cartRepository.flush();
+                payResult.put("state", "success");
+                payResult.put("message", "购买成功");
+
+                //生成订单
+                OrderItem orderItem = new OrderItem(book.getBookId(), book.getName(), cart.getCount(), book.getPrice() * cart.getCount());
+                order.getOrderItems().add(orderItem);
+                orderItem.setOrder(order);
+            }
+
+            orderRepository.saveAndFlush(order);
+            payResults.add(payResult);
+        }
+        return payResults;
     }
 
 }

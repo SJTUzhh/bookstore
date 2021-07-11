@@ -35,4 +35,9 @@ public class CartController {
     public Cart deleteBookFromCart(@RequestParam("userId") Integer userId, @RequestParam("bookId") Integer bookId){
         return cartService.deleteBookFromCart(userId, bookId);
     }
+
+    @RequestMapping("/payByCart")
+    public List<JSONObject> payByCart(@RequestParam("userId") Integer userId, @RequestParam("bookIds") List<Integer> bookIds){
+        return cartService.payByCart(userId, bookIds);
+    }
 }

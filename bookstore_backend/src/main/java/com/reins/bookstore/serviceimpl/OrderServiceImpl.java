@@ -2,7 +2,7 @@ package com.reins.bookstore.serviceimpl;
 
 import com.reins.bookstore.dao.OrderDao;
 import com.reins.bookstore.entity.Order;
-import com.reins.bookstore.entity.OrderBook;
+import com.reins.bookstore.entity.OrderItem;
 import com.reins.bookstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +20,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderBook> getOrderBooks(){
-        return orderDao.getOrderBooks();
+    public List<OrderItem> getOrderItems(){
+        return orderDao.getOrderItems();
     }
 
 }

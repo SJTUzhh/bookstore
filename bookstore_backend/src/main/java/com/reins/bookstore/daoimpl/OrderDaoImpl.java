@@ -3,9 +3,9 @@ package com.reins.bookstore.daoimpl;
 import com.reins.bookstore.dao.OrderDao;
 import com.reins.bookstore.entity.Book;
 import com.reins.bookstore.entity.Order;
-import com.reins.bookstore.entity.OrderBook;
+import com.reins.bookstore.entity.OrderItem;
 import com.reins.bookstore.repository.BookRepository;
-import com.reins.bookstore.repository.OrderBookRepository;
+import com.reins.bookstore.repository.OrderItemRepository;
 import com.reins.bookstore.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,7 +21,7 @@ public class OrderDaoImpl implements OrderDao {
     OrderRepository orderRepository;
 
     @Autowired
-    OrderBookRepository orderBookRepository;
+    OrderItemRepository OrderItemRepository;
 
     @Autowired
     BookRepository bookRepository;
@@ -39,16 +39,17 @@ public class OrderDaoImpl implements OrderDao {
         }
     }
 
-    public List<OrderBook> getOrderBooks(){
-        List<OrderBook> orderBooks = orderBookRepository.findAll();
-        //fetch bookname and bookPrice
-        for(OrderBook orderBook : orderBooks){
-            Book book = bookRepository.getOne(orderBook.getBookId());
-            String bookname = book.getName();
-            Double bookPrice = book.getPrice();
-            orderBook.setBookname(bookname);
-            orderBook.setBookPrice(bookPrice);
-        }
-        return orderBooks;
+    @Override
+    public List<OrderItem> getOrderItems(){
+        List<OrderItem> orderItems = OrderItemRepository.findAll();
+//        //fetch bookname and bookPrice
+//        for(OrderItem orderBook : orderBooks){
+//            Book book = bookRepository.getOne(orderBook.getBookId());
+//            String bookname = book.getName();
+//            Double bookPrice = book.getPrice();
+//            orderBook.setBookname(bookname);
+//            orderBook.setBookPrice(bookPrice);
+//        }
+        return orderItems;
     }
 }

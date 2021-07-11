@@ -30,4 +30,9 @@ public class CartServiceImpl implements CartService {
     public Cart deleteBookFromCart(Integer userId, Integer bookId) {
         return cartDao.deleteBookFromCart(userId, bookId);
     }
+
+    @Override
+    public List<JSONObject> payByCart(Integer userId, List<Integer> bookIds) {
+        return cartDao.payByCart(userId, bookIds);
+    }
 }

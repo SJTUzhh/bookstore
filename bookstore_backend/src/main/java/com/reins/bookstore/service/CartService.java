@@ -12,4 +12,6 @@ public interface CartService {
     List<JSONObject> getCartByUserId(Integer userId);
 
     Cart deleteBookFromCart(Integer userId, Integer bookId);
+
+    List<JSONObject> payByCart(Integer userId, List<Integer> bookIds);
 }
