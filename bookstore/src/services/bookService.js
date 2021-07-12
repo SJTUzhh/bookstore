@@ -30,3 +30,8 @@ export const addBook = (callback) => {
     const url = `${config.apiUrl}/addBook`;
     postRequest_v2(url, {}, callback);
 }
+
+export const changeBookShelve = (data, callback) => {
+    const url = `${config.apiUrl}/changeBookShelve`;
+    postRequest_v2(url, data, callback);
+}

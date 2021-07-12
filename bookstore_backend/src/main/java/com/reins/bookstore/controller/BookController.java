@@ -27,6 +27,10 @@ public class BookController {
 
     @RequestMapping("/getBooks")
     public List<Book> getBooks(@RequestBody Map<String, String> params) {
+        String searchName = params.get("searchName");
+        if(searchName !=null && searchName != ""){
+            return bookService.getBooksBySearchName(searchName);
+        }
         return bookService.getBooks();
     }
 
@@ -58,5 +62,10 @@ public class BookController {
     @RequestMapping("/addBook")
     public Book addBook(){
         return bookService.addBook();
+    }
+
+    @RequestMapping("/changeBookShelve")
+    public Boolean changeBookShelve(@RequestParam("bookId") Integer bookId, @RequestParam("shelve") Boolean shelve){
+        return bookService.changeBookShelve(bookId, shelve);
     }
 }

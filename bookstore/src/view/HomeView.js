@@ -33,7 +33,7 @@ class HomeView extends React.Component{
                     <SideBar />
                     <Content style={{ padding: '0 50px' }}>
                         <div className="home-content">
-                            <SearchBar />
+                            {/* <SearchBar /> */}
 
                             {/* <BookCarousel /> */}
                             <BookList />

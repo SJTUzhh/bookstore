@@ -73,4 +73,16 @@ public class BookDaoImpl implements BookDao {
         return newBook;
     }
 
+    @Override
+    public Boolean changeBookShelve(Integer bookId, Boolean shelve) {
+        Book book = bookRepository.getOne(bookId);
+        book.setShelve(shelve);
+        bookRepository.saveAndFlush(book);
+        return shelve;
+    }
+
+    @Override
+    public List<Book> getBooksBySearchName(String searchName) {
+        return bookRepository.findBooksByNameContains(searchName);
+    }
 }

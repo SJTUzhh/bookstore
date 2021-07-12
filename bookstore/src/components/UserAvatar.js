@@ -11,9 +11,9 @@ export class UserAvatar extends React.Component {
         const menu = (
             <Menu>
                 <Menu.Item>
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+                    {/* <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
                         Show Profile
-                    </a>
+                    </a> */}
                 </Menu.Item>
                 <Menu.Item>
                     <a href="#" onClick={userService.logout}>
@@ -29,7 +29,7 @@ export class UserAvatar extends React.Component {
 
         return(
             <div id="avatar">
-                <span className="name">Hi, {user.username}</span>
+                <span className="name">Hi, {user.name}</span>
                 <Dropdown overlay={menu} placement="bottomRight">
                     <Avatar src={imgUrl} style={{cursor:"pointer"}}/>
                 </Dropdown>

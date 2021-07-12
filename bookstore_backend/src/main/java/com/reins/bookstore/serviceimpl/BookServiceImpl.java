@@ -47,4 +47,14 @@ public class BookServiceImpl implements BookService {
     public Book addBook() {
         return bookDao.addBook();
     }
+
+    @Override
+    public Boolean changeBookShelve(Integer bookId, Boolean shelve) {
+        return bookDao.changeBookShelve(bookId, shelve);
+    }
+
+    @Override
+    public List<Book> getBooksBySearchName(String searchName) {
+        return bookDao.getBooksBySearchName(searchName);
+    }
 }

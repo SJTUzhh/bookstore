@@ -1,7 +1,6 @@
 package com.reins.bookstore.controller;
 
 import com.reins.bookstore.entity.Order;
-import com.reins.bookstore.entity.OrderInfo;
 import com.reins.bookstore.entity.OrderItem;
 import com.reins.bookstore.service.OrderService;
 import com.reins.bookstore.service.UserService;

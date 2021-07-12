@@ -16,4 +16,8 @@ public interface BookDao {
     Msg deleteBook(Integer bookId);
 
     Book addBook();
+
+    Boolean changeBookShelve(Integer bookId, Boolean shelve);
+
+    List<Book> getBooksBySearchName(String searchName);
 }
