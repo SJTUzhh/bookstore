@@ -1,10 +1,11 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Table, Input, Button, Popconfirm, Form, message } from 'antd';
-import { getBook, getBooks, commitBook, deleteBook, addBook } from "../services/bookService"
+import { getBook, getBooks, commitBook, deleteBook, addBook, changeBookShelve } from "../services/bookService"
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { BookDetailModal } from './BookDetailModal';
+import Switch from '@material-ui/core/Switch'
 
 const EditableContext = React.createContext();
 
@@ -91,23 +92,61 @@ class EditableCell extends React.Component {
     }
 }
 
+//写成一个受控组件的形式，只会和自己的state同步。除了第一次construct和props的值有关，之后就与props无关了
+class CustomSwitch extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { checked: this.props.checked};
+        this.handleChange = this.handleChange.bind(this);
+        this.bookId = this.props.bookId;
+    }
+
+    handleChange(checked) {
+        this.setState({ checked: checked});
+        let data = {bookId: this.bookId, shelve: (checked?true:false)}
+        const callback = (retData) => {
+            if(retData != null && retData == checked){
+                let msg = retData ? "已上架" : "已下架";
+                message.success(msg + ", bookId为: "+ data.bookId);
+            }
+        }
+        changeBookShelve(data, callback);
+    }
+
+    render() {
+        return <Switch
+            checked={this.state.checked}
+            onChange={(event) => {
+                this.handleChange(event.target.checked)
+            }}
+        />
+    }
+}
+
+
 export class AdminBookTable extends React.Component {
     constructor(props) {
         super(props);
         this.columns = [
             {
-                title: 'Title',
+                title: 'ID',
+                dataIndex: 'bookId',
+                key: 'bookId',
+                editable: false,
+            },
+            {
+                title: '书名',
                 dataIndex: 'name',
                 width: '30%',
                 editable: true,
             },
             {
-                title: 'Author',
+                title: '作者',
                 dataIndex: 'author',
                 editable: true,
             },
             {
-                title: 'Cover',
+                title: '封面',
                 dataIndex: 'image',
                 editable: true,
                 render: (text, record) => {
@@ -120,15 +159,28 @@ export class AdminBookTable extends React.Component {
             {
                 title: 'ISBN',
                 dataIndex: 'isbn',
-                editable: false,
+                editable: true,
             },
             {
-                title: 'Inventory',
+                title: '库存',
                 dataIndex: 'inventory',
                 editable: true,
             },
             {
-                title: 'Operation',
+                title: '是否上架',
+                dataIndex: 'shelve',
+                key: 'shelve',
+                editable: false,
+                render: (text, record) => {
+                    //console.log(record.bookId)
+                    return <CustomSwitch  
+                        checked={record.shelve?true:false}
+                        bookId={record.bookId}
+                    />
+                }
+            },
+            {
+                title: '操作',
                 dataIndex: 'operation',
                 render: (text, record) => {
                     let deleteButton = (this.state.dataSource.length >= 1) ? (
@@ -205,7 +257,7 @@ export class AdminBookTable extends React.Component {
 
     //数据库的"提交修改“
     rowCommit = data => {
-        console.log(data);
+        //console.log(data);
         let bookId = data.bookId;
 
         //check validation
@@ -242,7 +294,7 @@ export class AdminBookTable extends React.Component {
     componentDidMount() {
 
         const callback = (data) => {
-            console.log(data);
+            //console.log(data);
             this.setState({ dataSource: data, filteredData: data });
         };
 
@@ -299,7 +351,7 @@ export class AdminBookTable extends React.Component {
                 />
                 <br></br>
                 <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16 }}>
-                    Add a row
+                    添加新书
                 </Button>
                 <Table
                     components={components}

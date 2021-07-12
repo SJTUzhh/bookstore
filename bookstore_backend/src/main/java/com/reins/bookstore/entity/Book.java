@@ -26,14 +26,14 @@ public class Book {
     @Column(name = "id")
     private int bookId;
 
-    private String isbn;
-    private String name;
-    private String type;
-    private String author;
-    private Double price;
-    private String description;
+    private String isbn = "isbn";
+    private String name = "书名";
+    private String type = "类型";
+    private String author = "作者";
+    private Double price = 0.0;
+    private String description = "描述";
     private Integer inventory = 0;
-    private String image;
+    private String image = "封面网址";
     private Boolean shelve = true; //是否上架
 
     public Book(){}

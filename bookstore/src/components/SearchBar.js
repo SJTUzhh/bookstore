@@ -27,14 +27,14 @@ function renderOption(item) {
         <Option key={item.category} text={item.category}>
             <div className="global-search-item">
                 <span className="global-search-item-desc">
-                      Found {item.query} on
-                     <a
-                         href={`https://s.taobao.com/search?q=${item.query}`}
-                         target="_blank"
-                         rel="noopener noreferrer"
-                     >
-                         {item.category}
-                     </a>
+                    Found {item.query} on
+                    <a
+                        href={`https://s.taobao.com/search?q=${item.query}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {item.category}
+                    </a>
                 </span>
                 <span className="global-search-item-count">{item.count} results</span>
             </div>
@@ -48,6 +48,7 @@ export class SearchBar extends React.Component {
     };
 
     handleSearch = value => {
+        console.log("handleSearch")
         this.setState({
             dataSource: value ? searchResult(value) : [],
         });
@@ -57,14 +58,15 @@ export class SearchBar extends React.Component {
         const { dataSource } = this.state;
         return (
             <div className="global-search-wrapper" style={{ width: 300 }}>
-                <AutoComplete
+                {/* <AutoComplete
                     className="global-search"
                     size="large"
                     style={{ width: '100%' }}
                     dataSource={dataSource.map(renderOption)}
                     onSelect={onSelect}
+                    //或许可以换成onBlur？
                     onSearch={this.handleSearch}
-                    placeholder="input here"
+                    placeholder="请输入书名"
                     optionLabelProp="text"
                 >
                     <Input
@@ -79,7 +81,21 @@ export class SearchBar extends React.Component {
                             </Button>
                         }
                     />
-                </AutoComplete>
+                </AutoComplete> */}
+                <Input
+                    suffix={
+                        <Button
+                            className="search-btn"
+                            style={{ marginRight: -12 }}
+                            size="large"
+                            type="primary"
+                            onClick={()=>{}}
+                        >
+                            <Icon type="search" />
+                        </Button>
+                    }
+                    defaultValue={""}
+                />
             </div>
         );
     }
