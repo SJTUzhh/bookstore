@@ -13,29 +13,30 @@ export class AdminOrderTable extends React.Component {
                 title: 'Order ID',
                 dataIndex: 'orderId',
                 key: 'orderId',
+                sorter: (a, b) => (a.orderId - b.orderId)
             },
             {
-                title: 'Datetime',
+                title: '日期',
                 dataIndex: 'datetime',
                 key: 'datetime',
                 render: text => {
                     return text.replace("T", "  ")
                 },
-                sorter: (a, b) => (a.datetime > b.datetime)
+                //sorter: (a, b) => (a.datetime > b.datetime)
             },
             {
-                title: 'User Id',
-                dataIndex: 'userId',
-                key: 'userId',
-                render: text => <a>{text}</a>,
+                title: '用户名',
+                dataIndex: 'username',
+                key: 'username',
+                sorter: (a, b) => (a.username > b.username)
             },
             {
-                title: 'Title',
+                title: '书名',
                 dataIndex: 'bookname',
                 key: 'bookname',
             },
             {
-                title: 'Count',
+                title: '数目',
                 dataIndex: 'count',
                 key: 'count',
             },
@@ -43,7 +44,7 @@ export class AdminOrderTable extends React.Component {
         ];
 
         this.state = {
-            dataSource: [],
+            orderInfos: [],
             datetimeRange: [new Date(1609488000 * 1000), new Date()]
         };
     }
@@ -60,7 +61,7 @@ export class AdminOrderTable extends React.Component {
 
     handleFilterClick = () => {
         const callback = (data) => {
-            this.setState({ dataSource: data });
+            this.setState({ orderInfos: data });
         }
         const datetimeRange = this.state.datetimeRange;
         const beginTimestamp = datetimeRange == null ? 0.0 : datetimeRange[0].getTime();
@@ -90,7 +91,7 @@ export class AdminOrderTable extends React.Component {
 
                 <br />
 
-                <Table columns={this.columns} dataSource={this.state.dataSource} />
+                <Table columns={this.columns} dataSource={this.state.orderInfos} />
             </div>);
     }
 

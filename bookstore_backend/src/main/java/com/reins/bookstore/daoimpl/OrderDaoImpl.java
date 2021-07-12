@@ -40,20 +40,6 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<OrderItem> getOrderItems(){
-        List<OrderItem> orderItems = orderItemRepository.findAll();
-//        //fetch bookname and bookPrice
-//        for(OrderItem orderBook : orderBooks){
-//            Book book = bookRepository.getOne(orderBook.getBookId());
-//            String bookname = book.getName();
-//            Double bookPrice = book.getPrice();
-//            orderBook.setBookname(bookname);
-//            orderBook.setBookPrice(bookPrice);
-//        }
-        return orderItems;
-    }
-
-    @Override
     public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
         return orderItemRepository.findOrderItemsByOrderId(orderId);
     }

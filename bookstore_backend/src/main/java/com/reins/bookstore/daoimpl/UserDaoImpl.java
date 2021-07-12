@@ -66,4 +66,9 @@ public class UserDaoImpl implements UserDao {
         userAuthRepository.saveAndFlush(userAuth);
         return MsgUtil.makeMsg(MsgUtil.SUCCESS, "注册成功");
     }
+
+    @Override
+    public UserAuth getUserAuthById(Integer userId) {
+        return userAuthRepository.findUserAuthByUserId(userId);
+    }
 }

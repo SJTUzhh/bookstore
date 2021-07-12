@@ -4,6 +4,7 @@ import com.reins.bookstore.entity.Order;
 import com.reins.bookstore.entity.OrderInfo;
 import com.reins.bookstore.entity.OrderItem;
 import com.reins.bookstore.service.OrderService;
+import com.reins.bookstore.service.UserService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +18,35 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/adminGetOrderInfos")
     public List<JSONObject> adminGetOrderInfos(@RequestParam("beginTimestamp") Long beginTimestamp,
                                          @RequestParam("endTimestamp") Long endTimestamp){
+        List<JSONObject> adminOrderInfos = new ArrayList<>();
+        List<Order> adminOrders = orderService.getOrders(beginTimestamp, endTimestamp);
+        for(Order adminOrder: adminOrders){
+            Integer orderId = adminOrder.getId();
+            Integer userId = adminOrder.getUserId();
+            String username = userService.getUserAuthById(userId).getName();
+            List<OrderItem> orderItems = orderService.getOrderItemsByOrderId(orderId);
+            for(OrderItem orderItem: orderItems){
+                JSONObject adminOrderInfo = new JSONObject();
+                adminOrderInfo.put("orderId", orderId);
+                adminOrderInfo.put("bookId", orderItem.getPk().getBookId());
+                adminOrderInfo.put("datetime", adminOrder.getDatetime().toString());
+                adminOrderInfo.put("userId", userId);
+                adminOrderInfo.put("username", username);
+                adminOrderInfo.put("bookname", orderItem.getBookname());
+                adminOrderInfo.put("count", orderItem.getCount());
+                adminOrderInfo.put("cost", orderItem.getCost());
+                adminOrderInfos.add(adminOrderInfo);
+            }
+        }
+        return adminOrderInfos;
+
+
 //        List<Order> orders = getOrders(beginTimestamp, endTimestamp);
 //        List<OrderBook> orderBooks = getOrderBooks();
 //        List<OrderInfo> orderInfos = new ArrayList<>();
@@ -39,7 +65,6 @@ public class OrderController {
 //        }
 //
 //        return orderInfos;
-        return null;
     }
 
     @RequestMapping("/customerGetOrderInfos")
@@ -109,16 +134,9 @@ public class OrderController {
         return boughtBookInfos;
     }
 
-
-
     @RequestMapping("/getOrders")
     public List<Order> getOrders(Long beginTimestamp, Long endTimestamp){
         return orderService.getOrders(beginTimestamp, endTimestamp);
     }
 
-    @RequestMapping("/getOrderBooks")
-    public List<OrderItem> getOrderBooks(){
-//        return orderService.getOrderBooks();
-        return null;
-    }
 }

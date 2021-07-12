@@ -8,8 +8,6 @@ import java.util.List;
 public interface OrderDao {
     List<Order> getOrders(Long beginTimestamp, Long endTimestamp);
 
-    List<OrderItem> getOrderItems();
-
     List<OrderItem> getOrderItemsByOrderId(Integer orderId);
 
     List<OrderItem> getOrderItemsByOrderIds(List<Integer> orderIds);

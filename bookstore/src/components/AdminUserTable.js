@@ -49,8 +49,8 @@ export class AdminUserList extends React.Component {
             },
             {
                 title: 'Username',
-                dataIndex: 'username',
-                key: 'username',
+                dataIndex: 'name',
+                key: 'name',
             },
             {
                 title: 'enabled',

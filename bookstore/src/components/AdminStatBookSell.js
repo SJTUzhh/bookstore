@@ -10,18 +10,18 @@ export class AdminStatBookSell extends React.Component {
 
         this.columns = [
             {
-                title: 'Book Id',
+                title: '书 Id',
                 dataIndex: 'bookId',
                 key: 'bookId',
             },
             {
-                title: 'Title',
+                title: '书名',
                 dataIndex: 'bookname',
                 key: 'bookname',
                 render: text => <a>{text}</a>
             },
             {
-                title: 'Total Sell',
+                title: '总销量',
                 dataIndex: 'count',
                 key: 'count',
                 defaultSortOrder: 'descend',

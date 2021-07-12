@@ -9,21 +9,24 @@ export class AdminStatConsumer extends React.Component {
 
         this.columns = [
             {
-                title: 'User Id',
+                title: '用户 ID',
                 dataIndex: 'userId',
                 key: 'userId',
                 render: text => <a>{text}</a>
             },
             {
-                title: 'User Name',
+                title: '用户名',
                 dataIndex: 'username',
                 key: 'username',
             },
             {
-                title: 'Total Cost',
+                title: '总消费',
                 dataIndex: 'totalCost',
                 key: 'totalCost',
                 defaultSortOrder: 'descend',
+                render: (text) => {
+                    return text.toFixed(2);
+                },
                 sorter: (a, b) => (a.totalCost - b.totalCost)
             },
         ];
@@ -56,23 +59,25 @@ export class AdminStatConsumer extends React.Component {
     }
 
     getConsumerData = (data) => {
-        console.log(data[0], data.length);
         let consumerData = [];
         for (let i = 0; i < data.length; i++) {
             let userId = data[i].userId;
-            let existed = false;
+            let existedInConsumerData = false;
+            //遍历consumerData，查看userId对应的数据是否已经添加到了consumerData中
+            //若已经添加，则直接加
             for (let j = 0; j < consumerData.length; j++) {
                 if (consumerData[j].userId == userId) {
-                    consumerData[j].totalCost += data[i].bookPrice * data[i].count;
-                    existed = true;
+                    consumerData[j].totalCost += data[i].cost//.bookPrice * data[i].count;
+                    existedInConsumerData = true;
                     break;
                 }
             }
-            if (!existed) {
+            //否则，插入
+            if (!existedInConsumerData) {
                 consumerData.push({
                     userId: data[i].userId,
-                    username: "暂不支持查看",
-                    totalCost: data[i].bookPrice * data[i].count
+                    username: data[i].username,
+                    totalCost: data[i].cost
                 })
             }
         }

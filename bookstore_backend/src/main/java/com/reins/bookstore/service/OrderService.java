@@ -10,8 +10,6 @@ public interface OrderService {
 
     List<Order> getOrdersByUserId(Integer userId, Long beginTimestamp, Long endTimestamp);
 
-    List<OrderItem> getOrderItems();
-
     List<OrderItem> getOrderItemsByOrderId(Integer orderId);
 
     List<OrderItem> getOrderItemsByOrderIds(List<Integer> orderIds);

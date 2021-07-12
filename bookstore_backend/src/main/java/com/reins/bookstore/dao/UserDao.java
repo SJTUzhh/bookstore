@@ -16,4 +16,6 @@ public interface UserDao {
     UserAuth checkUsernameExist(String username);
 
     Msg addNewUser(String name, String password, String email);
+
+    UserAuth getUserAuthById(Integer userId);
 }
