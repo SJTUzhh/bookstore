@@ -1,11 +1,6 @@
 package com.reins.bookstore.constant;
 
-/**
- * @ClassName Constant
- * @Description TODO
- * @Author thunderBoy
- * @Date 2019/11/7 20:49
- */
+
 public class Constant {
     //user
     public static final String USER_ID = "userId";

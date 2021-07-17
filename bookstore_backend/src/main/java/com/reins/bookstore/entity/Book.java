@@ -9,12 +9,7 @@ import lombok.Lombok;
 
 import javax.persistence.*;
 
-/**
- * @ClassName Book
- * @Description Book Entity
- * @Author thunderBoy
- * @Date 2019/11/5 19:19
- */
+
 @Data
 @Entity
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
@@ -24,7 +19,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
-    private int bookId;
+    private Integer bookId;
 
     private String isbn = "isbn";
     private String name = "书名";

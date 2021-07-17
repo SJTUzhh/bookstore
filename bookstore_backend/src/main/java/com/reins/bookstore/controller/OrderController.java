@@ -44,26 +44,6 @@ public class OrderController {
             }
         }
         return adminOrderInfos;
-
-
-//        List<Order> orders = getOrders(beginTimestamp, endTimestamp);
-//        List<OrderBook> orderBooks = getOrderBooks();
-//        List<OrderInfo> orderInfos = new ArrayList<>();
-//
-//        // 为了取用效率，建立hashmap
-//        HashMap<Integer, Order> orderMap = new HashMap<>();
-//        for (Order order : orders) {
-//            orderMap.put(order.getId(), order);
-//        }
-//        // 构造OrderInfo
-//        for(OrderBook orderBook : orderBooks){
-//            int orderId = orderBook.getOrderId();
-//            Order order = orderMap.get(orderId);
-//            if(order == null) continue; // 针对过滤的情况
-//            orderInfos.add(new OrderInfo(order, orderBook));
-//        }
-//
-//        return orderInfos;
     }
 
     @RequestMapping("/customerGetOrderInfos")
@@ -112,12 +92,12 @@ public class OrderController {
             for(int j = i; j < orderItems.size(); j++){
                 OrderItem _orderItem = orderItems.get(j);
                 Integer _bookId = _orderItem.getPk().getBookId();
-                if(bookId == _bookId){
+                if(bookId.equals(_bookId)){
                     totalCount += _orderItem.getCount();
                     totalCost += _orderItem.getCost();
                     totalCountSum += _orderItem.getCount();
                     totalCostSum += _orderItem.getCost();
-                }else{ continue; }
+                }
             }
             JSONObject boughtBookInfo = new JSONObject();
             boughtBookInfo.put("bookname", orderItem.getBookname());

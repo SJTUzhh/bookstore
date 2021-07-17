@@ -11,11 +11,11 @@ public interface UserDao {
 
     List<UserAuth> getUserAuths();
 
-    Msg changeUserAuthEnabled(Integer userId, Integer enabled);
+    boolean changeUserAuthEnabled(Integer userId, Integer enabled);
 
     UserAuth checkUsernameExist(String username);
 
-    Msg addNewUser(String name, String password, String email);
+    void addNewUser(String name, String password, String email);
 
     UserAuth getUserAuthById(Integer userId);
 }

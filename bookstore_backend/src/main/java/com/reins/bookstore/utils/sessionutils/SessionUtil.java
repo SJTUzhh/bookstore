@@ -10,12 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * @ClassName SessionUtil
- * @Description Session Util
- * @Author thunderBoy
- * @Date 2019/11/7 19:27
- */
+
 public class SessionUtil {
 
     public static boolean checkAuth(){

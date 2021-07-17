@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Table, Input, Button, Popconfirm, Form, message } from 'antd';
-import { getBook, getBooks, commitBook, deleteBook, addBook, changeBookShelve } from "../services/bookService"
+import { getBook, adminGetBooks, commitBook, deleteBook, addBook, changeBookShelve } from "../services/bookService"
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { BookDetailModal } from './BookDetailModal';
@@ -298,7 +298,7 @@ export class AdminBookTable extends React.Component {
             this.setState({ dataSource: data, filteredData: data });
         };
 
-        getBooks({ "search": null }, callback);
+        adminGetBooks({ "search": null }, callback);
     }
 
     handleSearch = selectedOption => {

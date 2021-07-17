@@ -4,18 +4,15 @@ import com.reins.bookstore.dao.BookDao;
 import com.reins.bookstore.entity.Book;
 import com.reins.bookstore.service.BookService;
 import com.reins.bookstore.utils.msgutils.Msg;
+import com.reins.bookstore.utils.msgutils.MsgCode;
+import com.reins.bookstore.utils.msgutils.MsgUtil;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * @ClassName BookServiceImpl
- * @Description the Implement of BookService
- * @Author thunderBoy
- * @Date 2019/11/6 16:04
- */
+
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -25,22 +22,27 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book findBookById(Integer id){
-        return bookDao.findOne(id);
+        return bookDao.findBookById(id);
     }
 
     @Override
-    public List<Book> getBooks() {
-        return bookDao.getBooks();
+    public List<Book> getBooksOnShelve() {
+        return bookDao.getBooksOnShelve();
     }
 
     @Override
-    public Msg commitBook(JSONObject bookParams) {
-        return bookDao.commitBook(bookParams);
+    public List<Book> getBooksIgnoreShelve() {
+        return bookDao.getBooksIgnoreShelve();
     }
 
     @Override
-    public Msg deleteBook(Integer bookId) {
-        return bookDao.deleteBook(bookId);
+    public List<Book> getBooksOnShelveBySearchName(String searchName) {
+        return bookDao.getBooksOnShelveBySearchName(searchName);
+    }
+
+    @Override
+    public void deleteBook(Integer bookId) {
+        bookDao.deleteBook(bookId);
     }
 
     @Override
@@ -54,7 +56,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getBooksBySearchName(String searchName) {
-        return bookDao.getBooksBySearchName(searchName);
+    public boolean commitBook(Book book) {
+        return bookDao.commitBook(book);
     }
 }

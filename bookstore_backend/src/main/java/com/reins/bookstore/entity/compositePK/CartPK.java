@@ -6,8 +6,8 @@ import java.io.Serializable;
 
 @Data
 public class CartPK implements Serializable {
-    private int userId;
-    private int bookId;
+    private Integer userId;
+    private Integer bookId;
 
     public CartPK(){}
     public CartPK(int userId, int bookId){

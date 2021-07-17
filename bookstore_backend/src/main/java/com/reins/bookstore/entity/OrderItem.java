@@ -13,7 +13,7 @@ public class OrderItem {
     @EmbeddedId
     private OrderItemPK pk;
     private String bookname;
-    private int count;
+    private Integer count;
     private Double cost;
 
     @MapsId("orderId")

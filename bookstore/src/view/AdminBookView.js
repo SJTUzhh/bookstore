@@ -2,12 +2,9 @@ import React from 'react';
 import {Layout, Carousel} from 'antd'
 import {HeaderInfo} from "../components/HeaderInfo";
 import {AdminSideBar} from "../components/AdminSideBar";
-import '../css/home.css'
 import {withRouter} from "react-router-dom";
-import {BookCarousel} from "../components/BookCarousel";
-import {SearchBar} from "../components/SearchBar";
-import {BookList} from "../components/BookList";
 import { AdminBookTable } from "../components/AdminBookTable";
+import '../css/home.css'
 
 const { Header, Content, Footer } = Layout;
 

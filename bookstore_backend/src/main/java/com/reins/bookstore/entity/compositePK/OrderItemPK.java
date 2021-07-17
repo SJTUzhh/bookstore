@@ -10,8 +10,8 @@ import java.io.Serializable;
 @Data
 @Embeddable
 public class OrderItemPK implements Serializable{
-    private int orderId;
-    private int bookId;
+    private Integer orderId;
+    private Integer bookId;
     public OrderItemPK(){}
     public OrderItemPK(int bookId){
         this.bookId = bookId;

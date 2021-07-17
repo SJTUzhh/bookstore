@@ -17,11 +17,7 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
-    /**
-     *
-     * @param bookId
-     * @return bookId
-     */
+
     @RequestMapping("/addBook2Cart")
     public Cart addBook2Cart(@RequestParam("userId") Integer userId, @RequestParam("bookId") Integer bookId, @RequestParam("addCount") Integer addCount){
         return cartService.addBook2Cart(userId, bookId, addCount);

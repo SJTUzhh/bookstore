@@ -12,12 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * @ClassName UserDaoImpl
- * @Description the implement of user dao
- * @Author thunderBoy
- * @Date 2019/11/7 13:19
- */
+
 @Repository
 public class UserDaoImpl implements UserDao {
 
@@ -38,16 +33,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Msg changeUserAuthEnabled(Integer userId, Integer enabled) {
+    public boolean changeUserAuthEnabled(Integer userId, Integer enabled) {
         UserAuth userAuth = userAuthRepository.findUserAuthByUserId(userId);
         if(userAuth != null){
             userAuth.setEnabled(enabled);
-            userAuthRepository.save(userAuth);
-            userAuthRepository.flush();
-            String msg = ((enabled > 0) ? "已解禁" : "已禁用") + " User ID 为 " + userId + " 的用户";
-            return MsgUtil.makeMsg(MsgUtil.SUCCESS, msg);
+            userAuthRepository.saveAndFlush(userAuth);
+            return true;
         }
-        else return null;
+        return false;
     }
 
     @Override
@@ -56,15 +49,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Msg addNewUser(String name, String password, String email) {
+    public void addNewUser(String name, String password, String email) {
         UserAuth userAuth = new UserAuth(name, password, 1, 1);
         User user = new User(name, email);
-
         userAuth.setUser(user);
         user.setUserAuth(userAuth);
-
         userAuthRepository.saveAndFlush(userAuth);
-        return MsgUtil.makeMsg(MsgUtil.SUCCESS, "注册成功");
     }
 
     @Override

@@ -11,15 +11,17 @@ public interface BookService {
 
     Book findBookById(Integer id);
 
-    List<Book> getBooks();
+    List<Book> getBooksOnShelve();
 
-    Msg commitBook(JSONObject bookParams);
+    List<Book> getBooksIgnoreShelve();
 
-    Msg deleteBook(Integer bookId);
+    boolean commitBook(Book book);
+
+    void deleteBook(Integer bookId);
 
     Book addBook();
 
     Boolean changeBookShelve(Integer bookId, Boolean shelve);
 
-    List<Book> getBooksBySearchName(String searchName);
+    List<Book> getBooksOnShelveBySearchName(String searchName);
 }

@@ -7,12 +7,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-/**
- * @ClassName User
- * @Description Entity of User
- * @Author thunderBoy
- * @Date 2019/11/7 12:46
- */
+
 @Data
 @Entity
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
@@ -20,7 +15,7 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    private int userId;
+    private Integer userId;
     private String email;
     private String name;
     private String tel;

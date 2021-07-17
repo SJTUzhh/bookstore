@@ -4,17 +4,13 @@ import com.reins.bookstore.dao.UserDao;
 import com.reins.bookstore.entity.UserAuth;
 import com.reins.bookstore.service.UserService;
 import com.reins.bookstore.utils.msgutils.Msg;
+import com.reins.bookstore.utils.msgutils.MsgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * @ClassName UserServiceImpl
- * @Description the implement of user service
- * @Author thunderBoy
- * @Date 2019/11/7 13:16
- */
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -33,7 +29,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Msg changeUserAuthEnabled(Integer userId, Integer enabled) {
-        return userDao.changeUserAuthEnabled(userId, enabled);
+        boolean status = userDao.changeUserAuthEnabled(userId, enabled);
+        String msg = status ? ((enabled > 0 ? "已解禁" : "已禁用") + " User ID 为 " + userId + " 的用户") : "错误：用户不存在";
+        return MsgUtil.makeMsg(MsgUtil.SUCCESS, msg);
     }
 
     @Override
@@ -43,7 +41,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Msg addNewUser(String name, String password, String email) {
-        return userDao.addNewUser(name, password, email);
+        userDao.addNewUser(name, password, email);
+        return MsgUtil.makeMsg(MsgUtil.SUCCESS, "注册成功");
     }
 
     @Override

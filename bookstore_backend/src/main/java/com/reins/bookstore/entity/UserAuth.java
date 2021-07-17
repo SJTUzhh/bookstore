@@ -8,12 +8,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-/**
- * @ClassName UserAuth
- * @Description Entity of UserAuth
- * @Author thunderBoy
- * @Date 2019/11/7 13:07
- */
 
 @Entity
 //@Data: 一对一双向映射中（User和UserAuth），必须有一个不能用@Data，因为必须有一个不能重写toString

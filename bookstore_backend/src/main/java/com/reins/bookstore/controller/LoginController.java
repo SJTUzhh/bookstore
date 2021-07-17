@@ -20,27 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
-
-/**
- *@ClassName LoginController
- *@Description Controller for login
- *@Author thunderBoy
- *@Date 2019-11-05 15:09
- */
 @RestController
 public class LoginController {
-
-
     @Autowired
     private UserService userService;
 
-
-    /**
-     * @Description: login
-     * @Param: username,password,remember
-     * @return: Msg
-     * @Author: thunderBoy
-     */
     @RequestMapping("/login")
     //public Msg login(@RequestParam(Constant.USERNAME) String username, @RequestParam(Constant.PASSWORD) String password, @RequestParam(Constant.REMEMBER_ME) Boolean remember){
     public Msg login(@RequestBody Map<String, String> params){
@@ -59,7 +43,6 @@ public class LoginController {
                 JsonConfig config = new JsonConfig();
                 config.setExcludes(new String[]{"user"});
                 JSONObject data = JSONObject.fromObject(auth, config);
-                System.out.println("data: " + data);
 
                 data.remove(Constant.PASSWORD);
                 return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.LOGIN_SUCCESS_MSG, data);
@@ -82,12 +65,6 @@ public class LoginController {
         return MsgUtil.makeMsg(MsgCode.ERROR, MsgUtil.LOGOUT_ERR_MSG);
     }
 
-    /**
-     * @Description: getSession
-     * @Param: null
-     * @return: Msg
-     * @Author: thunderBoy
-     */
     @RequestMapping("/checkSession")
     public Msg checkSession(){
         JSONObject auth = SessionUtil.getAuth();

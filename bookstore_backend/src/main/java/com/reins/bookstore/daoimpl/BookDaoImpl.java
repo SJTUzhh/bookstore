@@ -13,12 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * @ClassName BookDaoImpl
- * @Description TODO
- * @Author thunderBoy
- * @Date 2019/11/5 20:20
- */
 @Repository
 public class BookDaoImpl implements BookDao {
 
@@ -26,50 +20,52 @@ public class BookDaoImpl implements BookDao {
     private BookRepository bookRepository;
 
     @Override
-    public Book findOne(Integer id){
-        return bookRepository.getOne(id);
+    public Book findBookById(Integer id){
+        return bookRepository.findBookByIdOnShelve(id);
     }
 
 
     @Override
-    public List<Book> getBooks() {
-        return bookRepository.getBooks();
+    public List<Book> getBooksOnShelve() {
+        return bookRepository.getBooksOnShelve();
     }
 
     @Override
-    public Msg commitBook(JSONObject bookParams) {
-        Integer bookId = Integer.parseInt(bookParams.get(Constant.BOOK_ID).toString());
+    public List<Book> getBooksIgnoreShelve() {
+        return bookRepository.getBooksIgnoreShelve();
+    }
+
+
+    @Override
+    public List<Book> getBooksOnShelveBySearchName(String searchName) {
+        return bookRepository.findBooksByNameContainsAndShelve(searchName, true);
+    }
+
+    @Override
+    public boolean commitBook(Book book) {
+        Integer bookId = book.getBookId();
         boolean exist = bookRepository.existsById(bookId);
-        if(exist){
-            Book book = bookRepository.getOne(bookId);
-            book.setIsbn(bookParams.get(Constant.ISBN).toString());
-            book.setName(bookParams.get(Constant.NAME).toString());
-            book.setAuthor(bookParams.get(Constant.AUTHOR).toString());
-            book.setImage(bookParams.get(Constant.IMAGE).toString());
-            book.setInventory(Integer.parseInt(bookParams.get(Constant.INVENTORY).toString()));
-            bookRepository.save(book);
-            bookRepository.flush();
-            return MsgUtil.makeMsg(MsgCode.SUCCESS, "保存成功（bookId：" + bookId + ")");
-        }else{
-            return MsgUtil.makeMsg(MsgCode.ERROR, "数据库不存在（bookId：" + bookId + ")");
-        }
-
-
-
+        if(!exist) return false;
+        Book oldBook = bookRepository.getOne(bookId);
+        oldBook.setIsbn(book.getIsbn());
+        oldBook.setName(book.getName());
+        oldBook.setAuthor(book.getAuthor());
+        oldBook.setImage(book.getImage());
+        oldBook.setInventory(book.getInventory());
+        bookRepository.saveAndFlush(oldBook);
+        return true;
     }
 
     @Override
-    public Msg deleteBook(Integer bookId) {
+    public void deleteBook(Integer bookId) {
         bookRepository.deleteById(bookId);
         bookRepository.flush();
-        return MsgUtil.makeMsg(MsgCode.SUCCESS, "删除成功（bookId：" + bookId + ")");
     }
 
     @Override
     public Book addBook() {
         Book newBook = new Book();
-        bookRepository.save(newBook);
-        bookRepository.flush();
+        bookRepository.saveAndFlush(newBook);
         return newBook;
     }
 
@@ -79,10 +75,5 @@ public class BookDaoImpl implements BookDao {
         book.setShelve(shelve);
         bookRepository.saveAndFlush(book);
         return shelve;
-    }
-
-    @Override
-    public List<Book> getBooksBySearchName(String searchName) {
-        return bookRepository.findBooksByNameContains(searchName);
     }
 }

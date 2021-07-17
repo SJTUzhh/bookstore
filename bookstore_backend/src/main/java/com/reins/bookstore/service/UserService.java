@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface UserService {
 
+    //检查登录时输入的用户名和密码是否正确
     UserAuth checkUser(String username, String password);
 
     List<UserAuth> getUserAuths();

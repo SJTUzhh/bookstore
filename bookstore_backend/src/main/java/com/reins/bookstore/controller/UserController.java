@@ -15,12 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @ClassName UserController
- * @Description the controller of user
- * @Author thunderBoy
- * @Date 2019/11/7 13:47
- */
+
 @RestController
 public class UserController {
 

@@ -2,12 +2,7 @@ package com.reins.bookstore.utils.msgutils;
 
 import net.sf.json.JSONObject;
 
-/**
- * @ClassName Msg
- * @Description Msg Class
- * @Author thunderBoy
- * @Date 2019/11/7 14:36
- */
+
 public class Msg {
     private int status;
     private String msg;

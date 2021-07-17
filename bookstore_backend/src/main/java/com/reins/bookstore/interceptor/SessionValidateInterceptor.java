@@ -14,12 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/**
- * @ClassName SessionValidateInterceptor
- * @Description Interceptor to check the user information in session
- * @Author thunderBoy
- * @Date 2019/11/7 20:05
- */
 public class SessionValidateInterceptor extends HandlerInterceptorAdapter {
 
     @Override

@@ -2,12 +2,7 @@ package com.reins.bookstore.utils.msgutils;
 
 import net.sf.json.JSONObject;
 
-/**
- * @ClassName Msg
- * @Description TODO
- * @Author thunderBoy
- * @Date 2019/11/7 14:32
- */
+
 public class MsgUtil {
 
     public static final int SUCCESS = 0;

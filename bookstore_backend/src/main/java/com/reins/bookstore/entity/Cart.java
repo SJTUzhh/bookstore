@@ -14,10 +14,10 @@ import javax.persistence.*;
 public class Cart {
 
     @Id
-    private int userId;
+    private Integer userId;
     @Id
-    private int bookId;
-    private int count;
+    private Integer bookId;
+    private Integer count;
 
     public Cart(){}
 

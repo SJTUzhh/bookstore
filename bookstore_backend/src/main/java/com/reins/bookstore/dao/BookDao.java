@@ -7,17 +7,19 @@ import net.sf.json.JSONObject;
 import java.util.List;
 
 public interface BookDao {
-    Book findOne(Integer id);
+    Book findBookById(Integer id);
 
-    List<Book> getBooks();
+    List<Book> getBooksOnShelve();
 
-    Msg commitBook(JSONObject bookParams);
+    List<Book> getBooksIgnoreShelve();
 
-    Msg deleteBook(Integer bookId);
+    List<Book> getBooksOnShelveBySearchName(String searchName);
+
+    boolean commitBook(Book book);
+
+    void deleteBook(Integer bookId);
 
     Book addBook();
 
     Boolean changeBookShelve(Integer bookId, Boolean shelve);
-
-    List<Book> getBooksBySearchName(String searchName);
 }

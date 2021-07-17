@@ -14,9 +14,9 @@ import java.util.List;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private LocalDateTime datetime;
-    private int userId;
+    private Integer userId;
 
     //不加cascade的话默认是none，不做任何级联操作
     @OneToMany(fetch = FetchType.LAZY, mappedBy="order", cascade = {CascadeType.ALL})

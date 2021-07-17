@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, Input, Button, Icon } from 'antd'
 import { Book } from './Book'
-import { getBooks } from "../services/bookService";
+import { customerGetBooks } from "../services/bookService";
 const { Search } = Input;
 
 export class BookList extends React.Component {
@@ -13,11 +13,6 @@ export class BookList extends React.Component {
 
     componentDidMount() {
 
-        // const callback = (data) => {
-        //     this.setState({ books: data });
-        // };
-
-        // getBooks({ "search": null }, callback);
         this.onSearch("");
 
     }
@@ -27,7 +22,7 @@ export class BookList extends React.Component {
             this.setState({ books: data });
         };
 
-        getBooks({ "searchName": value }, callback);
+        customerGetBooks({ "searchName": value }, callback);
     }
 
     render() {
